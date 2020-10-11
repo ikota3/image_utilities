@@ -17,7 +17,7 @@ class PDFConverter(object):
         self.input_dir: str = input_dir
         self.output_dir: str = output_dir
         if not extensions:
-            extensions = ['.jpg']
+            extensions = ('.jpg')
         self.extensions: (str) = tuple(extensions)
         self.force_write: bool = bool(force_write)
 
