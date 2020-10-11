@@ -2,6 +2,14 @@
 
 Convert images to pdf with CLI.
 
+## Requirements
+
+- `img2pdf`
+
+```sh
+pip install -r requirements.txt
+```
+
 ## Usage
 
 ### Convert images to pdf
