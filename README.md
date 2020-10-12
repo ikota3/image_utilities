@@ -24,8 +24,8 @@ pip install -r requirements.txt
   - output directory.
 - `-e`, `--extensions`
   - **optional parameter.**
-  - **default paramter is `jpg`**
-  - image extension type.
+  - **default paramter is `jpg` and `png`**
+  - extension type for filtering.
 - `-f`, `--force_write`
   - **optional parameter.**
   - **default paramter is `False`**
@@ -36,11 +36,11 @@ pip install -r requirements.txt
 - This command will recursively watch the input directory, and convert the **images in each directory** to pdf.
 
 - `-e`, `--extensions` can pass multiple extension. But you have to pass a list, with no space between comma.
-
-  - e.g. `-e jpg,png`
+- Also the extensions is **case sensitive**.
+  - e.g. `-e "jpg,jpeg,png"`
 
 #### Example
 
 ```sh
-python src/images_to_pdf.py convert -i "path/to/input" -o "path/to/output" -e jpg,png -f
+python src/images_to_pdf.py convert -i "path/to/input" -o "path/to/output" -f
 ```

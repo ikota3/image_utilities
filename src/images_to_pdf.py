@@ -1,6 +1,7 @@
 import os
 import fire
 import img2pdf
+from typing import Union, Tuple
 from PIL import Image
 
 
@@ -11,57 +12,90 @@ class PDFConverter(object):
             self,
             input_dir: str = "",
             output_dir: str = "",
-            extensions: (str) = None,
+            extensions: Union[str, Tuple[str]] = None,
             force_write: bool = False
     ):
         self.input_dir: str = input_dir
         self.output_dir: str = output_dir
         if not extensions:
-            extensions = ('.jpg')
-        self.extensions: (str) = tuple(extensions)
-        self.force_write: bool = bool(force_write)
+            extensions = ('jpg', 'png')
+        self.extensions: Tuple[str] = extensions
+        self.force_write: bool = force_write
 
     def _input_is_valid(self) -> bool:
         is_valid = True
-        if not os.path.isdir(self.input_dir):
-            is_valid = False
-            print('[ERROR] You must type a valid directory for input directory.')
 
-        if not os.path.isdir(self.output_dir):
+        # Check input_dir
+        if not isinstance(self.input_dir, str) or \
+                not os.path.isdir(self.input_dir):
+            print('[ERROR] You must type a valid directory for input directory.')
             is_valid = False
+
+        # Check output_dir
+        if not isinstance(self.output_dir, str) or \
+                not os.path.isdir(self.output_dir):
             print('[ERROR] You must type a valid directory for output directory.')
+            is_valid = False
+
+        # Check extensions
+        if not isinstance(self.extensions, tuple) and \
+                not isinstance(self.extensions, str):
+            print('[ERROR] You must type at least one extension.')
+            is_valid = False
+
+        # Check force_write
+        if not isinstance(self.force_write, bool):
+            print('[ERROR] You must just type -f flag. No need to type a parameter.')
+            is_valid = False
 
         return is_valid
 
     def convert(self):
         if not self._input_is_valid():
+            print('#---ERROR OCCURRED. PROCESS END.---#')
             return
+
+        # Append "." to prefix for extensions
+        extensions: Union[str | Tuple[str]] = None
+        if isinstance(self.extensions, tuple):
+            extensions = []
+            for extension in self.extensions:
+                extensions.append(f'.{extension}')
+            extensions = tuple(extensions)
+        elif isinstance(self.extensions, str):
+            extensions = f'.{self.extensions}'
 
         for current_dir, dirs, files in os.walk(self.input_dir):
             images = []
             for filename in sorted(files):
-                if filename.endswith(self.extensions):
+                if filename.endswith(extensions):
                     path = os.path.join(current_dir, filename)
                     images.append(path)
+
+            if not images:
+                print(
+                    f'[INFO] There are no {", ".join(self.extensions).upper()} image at {current_dir}.'
+                )
+                continue
 
             pdf_filename = os.path.join(
                 self.output_dir, f'{os.path.basename(current_dir)}.pdf'
             )
 
             if self.force_write:
-                if images:
-                    with open(pdf_filename, 'wb') as f:
-                        f.write(img2pdf.convert(images))
-                    print(f'[INFO] Created {pdf_filename}!')
+                with open(pdf_filename, 'wb') as f:
+                    f.write(img2pdf.convert(images))
+                print(f'[INFO] Created {pdf_filename}!')
             else:
                 if os.path.exists(pdf_filename):
-                    print(f"[ERROR] {pdf_filename} already exist!")
+                    print(f'[ERROR] {pdf_filename} already exist!')
                     continue
 
-                if images:
-                    with open(pdf_filename, 'wb') as f:
-                        f.write(img2pdf.convert(images))
-                    print(f'[INFO] Created {pdf_filename}!')
+                with open(pdf_filename, 'wb') as f:
+                    f.write(img2pdf.convert(images))
+                print(f'[INFO] Created {pdf_filename}!')
+
+        print("#---PROCESS END.---#")
 
 
 if __name__ == '__main__':
