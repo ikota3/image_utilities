@@ -44,3 +44,28 @@ pip install -r requirements.txt
 ```sh
 python src/images_to_pdf.py convert -i "path/to/input" -o "path/to/output" -f
 ```
+
+### Rename images to sequential number
+
+#### Parameters
+
+- `-t`, `--target_dir`
+
+  - **required parameter.**
+  - target directory.
+
+- `-d`, `--digit`
+
+  - **optional parameter.**
+  - digit for sequential number.
+
+- `-e`, `--extensions`
+  - extension type to rename.
+
+#### Note
+
+TODO
+
+#### Example
+
+TODO
