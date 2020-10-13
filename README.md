@@ -1,6 +1,6 @@
-# images_to_pdf
+# image_utilities
 
-Convert images to pdf with CLI.
+Image utilities using CLI.
 
 ## Requirements
 
