@@ -14,26 +14,39 @@ pip install -r requirements.txt
 
 ### Convert images to pdf
 
+Convert images in each directory to pdf.
+
 #### Parameters
 
 - `-i`, `--input_dir`
+
   - **required parameter.**
   - input directory.
+  - type: str
+
 - `-o`, `--output_dir`
+
   - **required parameter.**
   - output directory.
+  - type: str
+
 - `-e`, `--extensions`
+
   - **optional parameter.**
-  - **default paramter is `jpg` and `png`**
-  - extension type for filtering.
+  - **default parameter is `jpg` and `png`.**
+  - extension types for filtering.
+  - type: str | tuple(str)
+
 - `-f`, `--force_write`
+
   - **optional parameter.**
-  - **default paramter is `False`**
+  - **default parameter is `False`.**
   - force to write pdf file.
+  - type: boolean
 
 #### Note
 
-- This command will recursively watch the input directory, and convert the **images in each directory** to pdf.
+- This command will recursively watch the input directory, and convert the **files in each directory** to pdf.
 
 - `-e`, `--extensions` can pass multiple extension. But you have to pass a list, with no space between comma.
 - Also the extensions is **case sensitive**.
@@ -41,7 +54,7 @@ pip install -r requirements.txt
 
 #### Example
 
-```sh
+```bash
 python src/images_to_pdf.py convert -i "path/to/input" -o "path/to/output" -f
 ```
 
@@ -49,25 +62,40 @@ python src/images_to_pdf.py convert -i "path/to/input" -o "path/to/output" -f
 
 ### Rename images to sequential number
 
+Rename images in each directory to sequential number.
+
 #### Parameters
 
 - `-t`, `--target_dir`
 
   - **required parameter.**
   - target directory.
+  - type: str
 
 - `-d`, `--digit`
 
   - **optional parameter.**
+  - **default parameter is 4.**
   - digit for sequential number.
+  - type: int
 
 - `-e`, `--extensions`
-  - extension type to rename.
+
+  - **optional parameter.**
+  - **default parameter is `jpg` and `png`.**
+  - extension types to rename.
+  - type: str | tuple(str)
 
 #### Note
 
-TODO
+- This command will recursively watch the target directory, and convert the **files in each directory** to pdf.
+
+- `-e`, `--extensions` can pass multiple extension. But you have to pass a list, with no space between comma.
+- Also the extensions is **case sensitive**.
+  - e.g. `-e "jpg,jpeg,png"`
 
 #### Example
 
-TODO
+```bash
+python src/rename_to_sequential.py rename -t "path/to/target"
+```
