@@ -92,7 +92,7 @@ Rename images in each directory to sequential number.
 
 #### Note
 
-- This command will recursively watch the target directory, and convert the **files in each directory** to pdf.
+- This command will recursively watch the target directory, and rename the **files in each directory** to sequential number.
 
 - `-e`, `--extensions` can pass multiple extension. But you have to pass a list, with no space between comma.
 - Also the extensions is **case sensitive**.
