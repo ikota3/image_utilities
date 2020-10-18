@@ -45,6 +45,8 @@ pip install -r requirements.txt
 python src/images_to_pdf.py convert -i "path/to/input" -o "path/to/output" -f
 ```
 
+---
+
 ### Rename images to sequential number
 
 #### Parameters
