@@ -51,6 +51,7 @@ class PDFConverter(object):
         return is_valid
 
     def convert(self):
+        print('#---PROCESS START.---#')
         if not self._input_is_valid():
             print('#---ERROR OCCURRED. PROCESS END.---#')
             return
@@ -66,6 +67,7 @@ class PDFConverter(object):
             extensions = f'.{self.extensions}'
 
         for current_dir, dirs, files in os.walk(self.input_dir):
+            print(f'[INFO] Watching {current_dir}.')
             images = []
             for filename in sorted(files):
                 if filename.endswith(extensions):
@@ -74,7 +76,7 @@ class PDFConverter(object):
 
             if not images:
                 print(
-                    f'[INFO] There are no {", ".join(self.extensions).upper()} image at {current_dir}.'
+                    f'[INFO] There are no {", ".join(self.extensions).upper()} files at {current_dir}.'
                 )
                 continue
 
