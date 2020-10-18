@@ -14,6 +14,8 @@ pip install -r requirements.txt
 
 ### Convert images to pdf
 
+[src/images_to_pdf.py](src/images_to_pdf.py)
+
 Convert images in each directory to pdf.
 
 #### Parameters
@@ -61,6 +63,8 @@ python src/images_to_pdf.py convert -i "path/to/input" -o "path/to/output" -f
 ---
 
 ### Rename images to sequential number
+
+[src/rename_to_sequential.py](src/rename_to_sequential.py)
 
 Rename images in each directory to sequential number.
 
