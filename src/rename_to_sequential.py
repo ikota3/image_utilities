@@ -2,17 +2,7 @@ import re
 import os
 import fire
 from typing import Union, Tuple, List
-
-
-def atoi(text: str) -> Union[int, str]:
-    """Convert ascii to integer"""
-    return int(text) if text.isdigit() else text
-
-
-def natural_keys(text: str) -> Union[List[int], List[str]]:
-    """Key for natural sorting"""
-    print(re.split(r'(\d+)', text))
-    return [atoi(c) for c in re.split(r'(\d+)', text)]
+from sort_key import natural_keys
 
 
 class ImageRenamer(object):

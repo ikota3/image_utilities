@@ -3,6 +3,7 @@ import fire
 import img2pdf
 from typing import Union, Tuple
 from PIL import Image
+from sort_key import natural_keys
 
 
 class PDFConverter(object):
@@ -69,7 +70,7 @@ class PDFConverter(object):
         for current_dir, dirs, files in os.walk(self.input_dir):
             print(f'[INFO] Watching {current_dir}.')
             images = []
-            for filename in sorted(files):
+            for filename in sorted(files, key=natural_keys):
                 if filename.endswith(extensions):
                     path = os.path.join(current_dir, filename)
                     images.append(path)
