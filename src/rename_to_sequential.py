@@ -1,6 +1,18 @@
+import re
 import os
 import fire
-from typing import Union, Tuple
+from typing import Union, Tuple, List
+
+
+def atoi(text: str) -> Union[int, str]:
+    """Convert ascii to integer"""
+    return int(text) if text.isdigit() else text
+
+
+def natural_keys(text: str) -> Union[List[int], List[str]]:
+    """Key for natural sorting"""
+    print(re.split(r'(\d+)', text))
+    return [atoi(c) for c in re.split(r'(\d+)', text)]
 
 
 class ImageRenamer(object):
@@ -58,7 +70,7 @@ class ImageRenamer(object):
         for current_dir, dirs, files in os.walk(self.target_dir):
             print(f'[INFO] Watching {current_dir}.')
             filenames = []
-            for filename in sorted(files):
+            for filename in sorted(files, key=natural_keys):
                 if filename.endswith(extensions):
                     path = os.path.join(current_dir, filename)
                     filenames.append(path)
@@ -69,7 +81,7 @@ class ImageRenamer(object):
                 )
                 continue
 
-            for i, filename in enumerate(sorted(filenames)):
+            for i, filename in enumerate(sorted(filenames, key=natural_keys)):
                 _, extension = os.path.splitext(filename)
                 dst_filename = os.path.join(
                     current_dir, f'{i + 1:0{self.digit}}{extension}')
