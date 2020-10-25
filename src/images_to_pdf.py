@@ -65,7 +65,7 @@ class PDFConverter(object):
                 extensions.append(f'.{extension}')
             extensions = tuple(extensions)
         elif isinstance(self.extensions, str):
-            extensions = f'.{self.extensions}'
+            extensions = tuple([f'.{self.extensions}'])
 
         for current_dir, dirs, files in os.walk(self.input_dir):
             print(f'[INFO] Watching {current_dir}.')
