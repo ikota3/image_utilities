@@ -7,7 +7,7 @@ from sort_key import natural_keys
 
 
 class PDFConverter(object):
-    """Convert images to pdf class."""
+    """Class for convert images to pdf."""
 
     def __init__(
             self,
@@ -16,6 +16,14 @@ class PDFConverter(object):
             extensions: Union[str, Tuple[str]] = None,
             force_write: bool = False
     ):
+        """Initialize
+
+        Args:
+            input_dir (str): Input direcotry. Defaults to "".
+            output_dir (str): Output directory. Defaults to "".
+            extensions (Union[str, Tuple[str]]): Extensions. Defaults to None.
+            force_write (bool): Flag for overwrite the converted pdf. Defaults to False.
+        """
         self.input_dir: str = input_dir
         self.output_dir: str = output_dir
         if not extensions:
@@ -24,6 +32,11 @@ class PDFConverter(object):
         self.force_write: bool = force_write
 
     def _input_is_valid(self) -> bool:
+        """Validator for input.
+
+        Returns:
+            bool: True if is valid, False otherwise.
+        """
         is_valid = True
 
         # Check input_dir
@@ -52,6 +65,11 @@ class PDFConverter(object):
         return is_valid
 
     def convert(self):
+        """Convert images to pdf.
+
+        Convert images in each directory to pdf.
+        It will convert recursively based on the self.target_dir.
+        """
         print('#---PROCESS START.---#')
         if not self._input_is_valid():
             print('#---ERROR OCCURRED. PROCESS END.---#')

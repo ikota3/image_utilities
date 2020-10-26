@@ -6,12 +6,21 @@ from sort_key import natural_keys
 
 
 class ImageRenamer(object):
+    """Class for renaming images."""
+
     def __init__(
             self,
             target_dir: str = "",
             digit: int = 4,
             extensions: Union[str, Tuple[str]] = None
     ):
+        """Initialize
+
+        Args:
+            target_dir (str): Target directory. Defaults to "".
+            digit (int): Number of digits for renaming. Defaults to 4.
+            extensions (Union[str, Tuple[str]]): Extensions. Defaults to None.
+        """
         self.target_dir: str = target_dir
         self.digit: int = digit
         if not extensions:
@@ -19,6 +28,11 @@ class ImageRenamer(object):
         self.extensions: Tuple[str] = extensions
 
     def _input_is_valid(self) -> bool:
+        """Validator for input.
+
+        Returns:
+            bool: True if is valid, False otherwise.
+        """
         is_valid = True
 
         # Check target_dir
@@ -42,6 +56,11 @@ class ImageRenamer(object):
         return is_valid
 
     def rename(self):
+        """Rename to sequential number.
+
+        Rename the filename in each directory to sequential number.
+        It will rename recursively based on the self.target_dir.
+        """
         print('#---PROCESS START.---#')
         if not self._input_is_valid():
             print('#---ERROR OCCURRED. PROCESS END.---#')
