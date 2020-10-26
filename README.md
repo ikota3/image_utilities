@@ -51,8 +51,8 @@ Convert images in each directory to pdf.
 - This command will recursively watch the input directory, and convert the **files in each directory** to pdf.
 
 - `-e`, `--extensions` can pass multiple extension. But you have to pass a list, with no space between comma.
-- Also the extensions is **case sensitive**.
   - e.g. `-e "jpg,jpeg,png"`
+- Also the extensions is **case sensitive**.
 
 #### Example
 
@@ -95,8 +95,8 @@ Rename images in each directory to sequential number.
 - This command will recursively watch the target directory, and rename the **files in each directory** to sequential number.
 
 - `-e`, `--extensions` can pass multiple extension. But you have to pass a list, with no space between comma.
-- Also the extensions is **case sensitive**.
   - e.g. `-e "jpg,jpeg,png"`
+- Also the extensions is **case sensitive**.
 
 #### Example
 
