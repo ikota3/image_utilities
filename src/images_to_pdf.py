@@ -1,5 +1,7 @@
+import re
 import os
 import fire
+import json
 import img2pdf
 from typing import Union, Tuple
 from PIL import Image
@@ -14,7 +16,8 @@ class PDFConverter(object):
             input_dir: str = "",
             output_dir: str = "",
             extensions: Union[str, Tuple[str]] = None,
-            force_write: bool = False
+            force_write: bool = False,
+            yes: bool = False
     ):
         """Initialize
 
@@ -23,6 +26,7 @@ class PDFConverter(object):
             output_dir (str): Output directory. Defaults to "".
             extensions (Union[str, Tuple[str]]): Extensions. Defaults to None.
             force_write (bool): Flag for overwrite the converted pdf. Defaults to False.
+            yes (bool): Flag for asking to execute or not. Defaults to False.
         """
         self.input_dir: str = input_dir
         self.output_dir: str = output_dir
@@ -30,6 +34,7 @@ class PDFConverter(object):
             extensions = ('jpg', 'png')
         self.extensions: Tuple[str] = extensions
         self.force_write: bool = force_write
+        self.yes = bool(yes)
 
     def _input_is_valid(self) -> bool:
         """Validator for input.
@@ -62,7 +67,18 @@ class PDFConverter(object):
             print('[ERROR] You must just type -f flag. No need to type a parameter.')
             is_valid = False
 
+        # Check yes
+        if not isinstance(self.yes, bool):
+            print('[ERROR] You must just type -y flag. No need to type a parameter.')
+            is_valid = False
+
         return is_valid
+
+    def print_info(self):
+        """Print info for given parameters."""
+        max_chars = max([len(key) for key in self.__dict__])
+        for key in sorted(self.__dict__):
+            print(f'{key: <{max_chars}} -> {self.__dict__[key]}')
 
     def convert(self):
         """Convert images to pdf.
@@ -71,9 +87,20 @@ class PDFConverter(object):
         It will convert recursively based on the self.target_dir.
         """
         print('#---PROCESS START.---#')
+        self.print_info()
         if not self._input_is_valid():
             print('#---ERROR OCCURRED. PROCESS END.---#')
             return
+
+        if not self.yes:
+            user_input = ""
+            while not re.search("^[yYnN].*$", user_input):
+                user_input = input("Are you sure to execute?(y/n): ")
+
+            if re.search("^[nN].*$", user_input):
+                print("Abort...")
+                print('#---PROCESS END.---#')
+                return
 
         # Append "." to prefix for extensions
         extensions: Union[str | Tuple[str]] = None

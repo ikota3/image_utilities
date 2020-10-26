@@ -1,6 +1,7 @@
 import re
 import os
 import fire
+import json
 from typing import Union, Tuple, List
 from sort_key import natural_keys
 
@@ -12,7 +13,8 @@ class ImageRenamer(object):
             self,
             target_dir: str = "",
             digit: int = 4,
-            extensions: Union[str, Tuple[str]] = None
+            extensions: Union[str, Tuple[str]] = None,
+            yes: bool = False
     ):
         """Initialize
 
@@ -20,12 +22,14 @@ class ImageRenamer(object):
             target_dir (str): Target directory. Defaults to "".
             digit (int): Number of digits for renaming. Defaults to 4.
             extensions (Union[str, Tuple[str]]): Extensions. Defaults to None.
+            yes (bool): Flag for asking to execute or not. Defaults to False.
         """
         self.target_dir: str = target_dir
         self.digit: int = digit
         if not extensions:
             extensions = ('jpg', 'png')
         self.extensions: Tuple[str] = extensions
+        self.yes = bool(yes)
 
     def _input_is_valid(self) -> bool:
         """Validator for input.
@@ -53,7 +57,18 @@ class ImageRenamer(object):
             print('[ERROR] You must type at least one extension.')
             is_valid = False
 
+        # Check yes
+        if not isinstance(self.yes, bool):
+            print('[ERROR] You must just type -y flag. No need to type a parameter.')
+            is_valid = False
+
         return is_valid
+
+    def print_info(self):
+        """Print info for given parameters."""
+        max_chars = max([len(key) for key in self.__dict__])
+        for key in sorted(self.__dict__):
+            print(f'{key: <{max_chars}} -> {self.__dict__[key]}')
 
     def rename(self):
         """Rename to sequential number.
@@ -62,9 +77,20 @@ class ImageRenamer(object):
         It will rename recursively based on the self.target_dir.
         """
         print('#---PROCESS START.---#')
+        self.print_info()
         if not self._input_is_valid():
             print('#---ERROR OCCURRED. PROCESS END.---#')
             return
+
+        if not self.yes:
+            user_input = ""
+            while not re.search("^[yYnN].*$", user_input):
+                user_input = input("Are you sure to execute?(y/n): ")
+
+            if re.search("^[nN].*$", user_input):
+                print("Abort...")
+                print('#---PROCESS END.---#')
+                return
 
         # Append "." to prefix for extensions
         extensions: Union[str | Tuple[str]] = None

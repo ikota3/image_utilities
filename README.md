@@ -46,6 +46,13 @@ Convert images in each directory to pdf.
   - force to write pdf file.
   - type: boolean
 
+- `-y`, `--yes`
+
+  - **optional parameter.**
+  - **default parameter is `False`.**
+  - execute without asking.
+  - type: boolean
+
 #### Note
 
 - This command will recursively watch the input directory, and convert the **files in each directory** to pdf.
@@ -102,6 +109,13 @@ Rename images in each directory to sequential number.
   - **default parameter is `jpg` and `png`.**
   - extension types to rename.
   - type: str | tuple(str)
+
+- `-y`, `--yes`
+
+  - **optional parameter.**
+  - **default parameter is `False`.**
+  - execute without asking.
+  - type: boolean
 
 #### Note
 
