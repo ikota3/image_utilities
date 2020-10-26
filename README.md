@@ -52,7 +52,20 @@ Convert images in each directory to pdf.
 
 - `-e`, `--extensions` can pass multiple extension. But you have to pass a list, with no space between comma.
   - e.g. `-e "jpg,jpeg,png"`
-- Also the extensions is **case sensitive**.
+- Extensions is **case sensitive**.
+
+- The sorting method is human sorting.
+
+  - e.g.
+
+    ```python
+    l = ["01.jpg", "02.jpg", "003.jpg"]
+    # Not in the right order
+    print(sorted(l)) # ["003.jpg", "01.jpg", "02.jpg"]
+
+    # :)
+    print(human_sort(l)) # ["01.jpg", "02.jpg", "003.jpg"]
+    ```
 
 #### Example
 
@@ -96,7 +109,9 @@ Rename images in each directory to sequential number.
 
 - `-e`, `--extensions` can pass multiple extension. But you have to pass a list, with no space between comma.
   - e.g. `-e "jpg,jpeg,png"`
-- Also the extensions is **case sensitive**.
+- Extensions is **case sensitive**.
+
+- The sorting method is human sorting.
 
 #### Example
 
