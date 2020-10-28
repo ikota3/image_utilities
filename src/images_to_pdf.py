@@ -22,7 +22,7 @@ class PDFConverter(object):
         """Initialize
 
         Args:
-            input_dir (str): Input direcotry. Defaults to "".
+            input_dir (str): Input directory. Defaults to "".
             output_dir (str): Output directory. Defaults to "".
             extensions (Union[str, Tuple[str]]): Extensions. Defaults to None.
             force_write (bool): Flag for overwrite the converted pdf. Defaults to False.
