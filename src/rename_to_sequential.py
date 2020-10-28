@@ -29,7 +29,7 @@ class ImageRenamer(object):
         if not extensions:
             extensions = ('jpg', 'png')
         self.extensions: Tuple[str] = extensions
-        self.yes = bool(yes)
+        self.yes: bool = yes
 
     def _input_is_valid(self) -> bool:
         """Validator for input.
