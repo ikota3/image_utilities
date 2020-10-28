@@ -4,6 +4,8 @@ Image utilities using CLI.
 
 ## Requirements
 
+- `fire`
+
 - `img2pdf`
 
 ```sh
