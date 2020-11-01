@@ -5,7 +5,7 @@ import json
 import img2pdf
 from typing import Union, Tuple
 from PIL import Image
-from sort_key import natural_keys
+from utils import natural_keys
 
 
 class PDFConverter(object):

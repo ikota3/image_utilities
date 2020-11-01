@@ -3,7 +3,7 @@ import os
 import fire
 import json
 from typing import Union, Tuple, List
-from sort_key import natural_keys
+from utils import natural_keys
 
 
 class ImageRenamer(object):
