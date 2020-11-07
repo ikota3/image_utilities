@@ -3,7 +3,7 @@ import os
 import fire
 import json
 from typing import Union, Tuple, List
-from utils import natural_keys
+from utils import natural_keys, show_info
 
 
 class ImageRenamer(object):
@@ -64,12 +64,6 @@ class ImageRenamer(object):
 
         return is_valid
 
-    def print_info(self):
-        """Print info for given parameters."""
-        max_chars = max([len(key) for key in self.__dict__])
-        for key in sorted(self.__dict__):
-            print(f'{key: <{max_chars}} -> {self.__dict__[key]}')
-
     def rename(self):
         """Rename to sequential number.
 
@@ -77,7 +71,7 @@ class ImageRenamer(object):
         It will rename recursively based on the self.target_dir.
         """
         print('#---PROCESS START.---#')
-        self.print_info()
+        show_info(self)
         if not self._input_is_valid():
             print('#---ERROR OCCURRED. PROCESS END.---#')
             return
