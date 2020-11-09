@@ -29,7 +29,11 @@ def natural_keys(text: str) -> Union[List[int], List[str]]:
 
 
 def show_info(obj: object) -> None:
-    """Show info for given paramters.."""
+    """Show info for given paramters.
+
+    Args:
+        obj (object): instance
+    """
     max_chars = max([len(key) for key in obj.__dict__])
     for key in sorted(obj.__dict__):
         print(f'{key: <{max_chars}} -> {obj.__dict__[key]}')
@@ -40,11 +44,11 @@ def gen_random_filename(directory_name: str, extension: str) -> str:
 
     Args:
         directory_name (str): directory name.
-        extension (str): extension without dot.
+        extension (str): extension includes dot.
     """
     path = ""
     while True:
-        random_filename = f'{uuid.uuid4().hex}.{extension}'
+        random_filename = f'{uuid.uuid4().hex}{extension}'
         path = os.path.join(directory_name, random_filename)
         if os.path.exists(path):
             continue
