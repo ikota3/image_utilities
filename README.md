@@ -16,7 +16,7 @@ pip install -r requirements.txt
 
 ### Convert images to pdf
 
-[src/images_to_pdf.py](src/images_to_pdf.py)
+[src/convert_to_pdf.py](src/convert_to_pdf.py)
 
 Convert images in each directory to pdf.
 
@@ -79,7 +79,7 @@ Convert images in each directory to pdf.
 #### Example
 
 ```bash
-python src/images_to_pdf.py convert -i "path/to/input" -o "path/to/output" -f
+python src/convert_to_pdf.py convert -i "path/to/input" -o "path/to/output" -f
 ```
 
 ---
