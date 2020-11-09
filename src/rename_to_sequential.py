@@ -27,7 +27,7 @@ class ImageRenamer(object):
         self.target_dir: str = target_dir
         self.digit: int = digit
         if not extensions:
-            extensions = ('jpg', 'png')
+            extensions = ('jpg')
         self.extensions: Tuple[str] = extensions
         self.yes: bool = yes
 

@@ -37,7 +37,7 @@ Convert images in each directory to pdf.
 - `-e`, `--extensions`
 
   - **optional parameter.**
-  - **default parameter is `jpg` and `png`.**
+  - **default parameter is `jpg`.**
   - extension types for filtering.
   - type: str | tuple(str)
 
@@ -108,7 +108,7 @@ Rename images in each directory to sequential number.
 - `-e`, `--extensions`
 
   - **optional parameter.**
-  - **default parameter is `jpg` and `png`.**
+  - **default parameter is `jpg`.**
   - extension types to rename.
   - type: str | tuple(str)
 
