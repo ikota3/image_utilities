@@ -4,7 +4,7 @@ import uuid
 from typing import Union, List
 
 
-def atoi(text: str) -> Union[int, str]:
+def _atoi(text: str) -> Union[int, str]:
     """Convert ascii to integer.
 
     Args:
@@ -25,7 +25,7 @@ def natural_keys(text: str) -> Union[List[int], List[str]]:
     Returns:
         Union[List[int], List[str]]: A list of mixed integer and strings.
     """
-    return [atoi(c) for c in re.split(r'(\d+)', text)]
+    return [_atoi(c) for c in re.split(r'(\d+)', text)]
 
 
 def show_info(obj: object) -> None:
