@@ -46,14 +46,14 @@ Convert images in each directory to pdf.
   - **optional parameter.**
   - **default parameter is `False`.**
   - force to write pdf file.
-  - type: boolean
+  - type: bool
 
 - `-y`, `--yes`
 
   - **optional parameter.**
   - **default parameter is `False`.**
   - execute without asking.
-  - type: boolean
+  - type: bool
 
 #### Note
 
@@ -117,7 +117,7 @@ Rename images in each directory to sequential number.
   - **optional parameter.**
   - **default parameter is `False`.**
   - execute without asking.
-  - type: boolean
+  - type: bool
 
 #### Note
 
@@ -133,4 +133,50 @@ Rename images in each directory to sequential number.
 
 ```bash
 python src/rename_to_sequential.py rename -t "path/to/target"
+```
+
+---
+
+### Swap first and second image
+
+[src/swap_image.py](src/swap_image.py)
+
+Swap first and second image in each directory.
+
+#### Parameters
+
+- `-t`, `--target_dir`
+
+  - **required parameter.**
+  - target directory.
+  - type: str
+
+- `-e`, `--extensions`
+
+  - **optional parameter.**
+  - **default parameter is `jpg`.**
+  - extension types to rename.
+  - type: str | tuple(str)
+
+- `-y`, `--yes`
+
+  - **optional parameter.**
+  - **default parameter is `False`.**
+  - execute without asking.
+  - type: bool
+
+#### Note
+
+- This command will recursively watch the target directory, and swap the first and second image **in each directory**.
+
+- `-e`, `--extensions` can pass multiple extension. But you have to pass a list, with no space between comma.
+  - e.g. `-e "jpg,jpeg,png"`
+- Extensions is **case sensitive**.
+
+- The sorting method is human sorting.
+
+#### Example
+
+```bash
+python src/swap_image.py swap -t "path/to/target"
 ```
