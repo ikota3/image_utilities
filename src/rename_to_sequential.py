@@ -106,7 +106,7 @@ class ImageRenamer(object):
 
             if not filenames:
                 print(
-                    f'[INFO] There are no {", ".join(self.extensions).upper()} files at {current_dir}.'
+                    f'[INFO] There are no {", ".join(extensions).upper()} files at {current_dir}.'
                 )
                 continue
 
@@ -116,7 +116,7 @@ class ImageRenamer(object):
                     current_dir, f'{i + 1:0{self.digit}}{extension}')
                 os.rename(filename, dst_filename)
             print(
-                f'[INFO] Renamed {", ".join(self.extensions).upper()} files at {current_dir}.'
+                f'[INFO] Renamed {", ".join(extensions).upper()} files at {current_dir}.'
             )
 
         print("#---PROCESS END.---#")

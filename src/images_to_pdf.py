@@ -116,7 +116,7 @@ class PDFConverter(object):
 
             if not images:
                 print(
-                    f'[INFO] There are no {", ".join(self.extensions).upper()} files at {current_dir}.'
+                    f'[INFO] There are no {", ".join(extensions).upper()} files at {current_dir}.'
                 )
                 continue
 
