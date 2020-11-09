@@ -10,20 +10,18 @@ class ImageSwap(object):
     def __init__(
         self,
         target_dir: str = "",
-        extensions: Union[str, Tuple[str]] = None,
+        extension: str = "jpg",
         yes: bool = False
     ):
         """Initialize
 
         Args:
           target_dir (str): Target directory. Defaults to "".
-          extensions (Union[str, Tuple[str]]): Extensions. Defaults to None.
+          extension (str): Extension. Defaults to "jpg".
           yes (bool): Flag for asking to execute or not. Defaults to False.
         """
         self.target_dir: str = target_dir
-        if not extensions:
-            extensions = ('jpg')
-        self.extensions: Tuple[str] = extensions
+        self.extension: str = extension
         self.yes: bool = yes
 
     def _input_is_valid(self) -> bool:
@@ -40,10 +38,10 @@ class ImageSwap(object):
             print('[ERROR] You must type a valid directory for target directory.')
             is_valid = False
 
-        # Check extensions
-        if not isinstance(self.extensions, tuple) and \
-                not isinstance(self.extensions, str):
-            print('[ERROR] You must type at least one extension.')
+        # Check extension
+        if not isinstance(self.extension, str) or \
+                not self.extension:
+            print('[ERROR] You must type a extension.')
             is_valid = False
 
         # Check yes
@@ -74,33 +72,26 @@ class ImageSwap(object):
                 print('#---PROCESS END.---#')
                 return
 
-        # Append "." to prefix for extensions
-        extensions: Union[str | Tuple[str]] = None
-        if isinstance(self.extensions, tuple):
-            extensions = []
-            for extension in self.extensions:
-                extensions.append(f'.{extension}')
-            extensions = tuple(extensions)
-        elif isinstance(self.extensions, str):
-            extensions = tuple([f'.{self.extensions}'])
+        # Append "." to prefix for extension
+        self.extension = f'.{self.extension}'
 
         for current_dir, dirs, files in os.walk(self.target_dir):
             print(f'[INFO] Watching {current_dir}.')
             filenames = []
             for filename in files:
-                if filename.endswith(extensions):
+                if filename.endswith(self.extension):
                     path = os.path.join(current_dir, filename)
                     filenames.append(path)
 
             if not filenames:
                 print(
-                    f'[INFO] There are no {", ".join(extensions).upper()} files at {current_dir}'
+                    f'[INFO] There are no {self.extension.upper()} files at {current_dir}'
                 )
                 continue
 
             if not 2 < len(filenames):
                 print(
-                    f'[INFO] There are not enough {", ".join(extensions).upper()} files at {current_dir}'
+                    f'[INFO] There are not enough {self.extension.upper()} files at {current_dir}'
                 )
                 continue
 

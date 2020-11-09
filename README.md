@@ -55,12 +55,14 @@ Convert images in each directory to pdf.
   - execute without asking.
   - type: bool
 
-#### Note
+#### Notes
 
 - This command will recursively watch the input directory, and convert the **files in each directory** to pdf.
 
 - `-e`, `--extensions` can pass multiple extension. But you have to pass a list, with no space between comma.
+
   - e.g. `-e "jpg,jpeg,png"`
+
 - Extensions is **case sensitive**.
 
 - The sorting method is human sorting.
@@ -119,12 +121,14 @@ Rename images in each directory to sequential number.
   - execute without asking.
   - type: bool
 
-#### Note
+#### Notes
 
 - This command will recursively watch the target directory, and rename the **files in each directory** to sequential number.
 
 - `-e`, `--extensions` can pass multiple extension. But you have to pass a list, with no space between comma.
+
   - e.g. `-e "jpg,jpeg,png"`
+
 - Extensions is **case sensitive**.
 
 - The sorting method is human sorting.
@@ -151,12 +155,12 @@ Swap first and second image in each directory.
   - target directory.
   - type: str
 
-- `-e`, `--extensions`
+- `-e`, `--extension`
 
   - **optional parameter.**
   - **default parameter is `jpg`.**
-  - extension types to rename.
-  - type: str | tuple(str)
+  - extension types to swap.
+  - type: str
 
 - `-y`, `--yes`
 
@@ -165,13 +169,13 @@ Swap first and second image in each directory.
   - execute without asking.
   - type: bool
 
-#### Note
+#### Notes
 
 - This command will recursively watch the target directory, and swap the first and second image **in each directory**.
 
-- `-e`, `--extensions` can pass multiple extension. But you have to pass a list, with no space between comma.
-  - e.g. `-e "jpg,jpeg,png"`
-- Extensions is **case sensitive**.
+- `-e`, `--extension` can only pass one extension.
+
+- Extension is **case sensitive**.
 
 - The sorting method is human sorting.
 
