@@ -100,7 +100,7 @@ class ImageSwap(object):
             second_file = filenames[1]
             tmp_file = gen_random_filename(
                 os.path.dirname(first_file),
-                os.path.splitext(os.path.basename(first_file))
+                self.extension
             )
             os.rename(first_file, tmp_file)
             os.rename(second_file, first_file)
