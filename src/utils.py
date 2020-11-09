@@ -37,7 +37,7 @@ def show_info(obj: object) -> None:
 
 def gen_random_filename(directory_name: str, extension: str) -> str:
     """Generate random filename in given directory.
-    
+
     Args:
         directory_name (str): directory name.
         extension (str): extension without dot.
