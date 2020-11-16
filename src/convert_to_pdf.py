@@ -8,7 +8,7 @@ from PIL import Image
 from utils import natural_keys, show_info
 
 
-class PDFConverter(object):
+class ImageConverter(object):
     """Class for convert images to pdf."""
 
     def __init__(
@@ -141,4 +141,4 @@ class PDFConverter(object):
 
 
 if __name__ == '__main__':
-    fire.Fire(PDFConverter)
+    fire.Fire(ImageConverter)

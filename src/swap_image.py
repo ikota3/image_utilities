@@ -7,6 +7,8 @@ from utils import show_info, natural_keys, gen_random_filename
 
 
 class ImageSwap(object):
+    """Class for renaming images."""
+
     def __init__(
         self,
         target_dir: str = "",
