@@ -2,6 +2,7 @@ import re
 import os
 import fire
 import json
+from alive_progress import alive_bar
 from typing import Union, Tuple, List
 from utils import natural_keys, show_info
 
@@ -99,7 +100,7 @@ class ImageRenamer(object):
         for current_dir, dirs, files in os.walk(self.target_dir):
             print(f'[INFO] Watching {current_dir}.')
             filenames = []
-            for filename in sorted(files, key=natural_keys):
+            for filename in sorted(files):
                 if filename.endswith(extensions):
                     path = os.path.join(current_dir, filename)
                     filenames.append(path)
@@ -110,11 +111,14 @@ class ImageRenamer(object):
                 )
                 continue
 
-            for i, filename in enumerate(sorted(filenames, key=natural_keys)):
-                _, extension = os.path.splitext(filename)
-                dst_filename = os.path.join(
-                    current_dir, f'{i + 1:0{self.digit}}{extension}')
-                os.rename(filename, dst_filename)
+            with alive_bar(len(filenames), bar='filling') as bar:
+                for i, filename in enumerate(sorted(filenames, key=natural_keys)):
+                    _, extension = os.path.splitext(filename)
+                    dst_filename = os.path.join(
+                        current_dir, f'{i + 1:0{self.digit}}{extension}')
+                    os.rename(filename, dst_filename)
+                    bar()
+
             print(
                 f'[INFO] Renamed {", ".join(extensions).upper()} files at {current_dir}.'
             )

@@ -3,8 +3,8 @@ import os
 import fire
 import json
 import img2pdf
-from typing import Union, Tuple
 from PIL import Image
+from typing import Union, Tuple
 from utils import natural_keys, show_info
 
 
