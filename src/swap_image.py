@@ -3,23 +3,26 @@ import os
 import fire
 import uuid
 from typing import Union, Tuple
-from utils import show_info, natural_keys, gen_random_filename
+from utils import show_info, natural_keys, gen_random_filename, setup_logger
+
+
+logger = setup_logger(__name__)
 
 
 class ImageSwap(object):
-    """Class for renaming images."""
+    """Class for swaping images."""
 
     def __init__(
         self,
-        target_dir: str = "",
-        extension: str = "jpg",
+        target_dir: str = '',
+        extension: str = 'jpg',
         yes: bool = False
     ):
         """Initialize
 
         Args:
-          target_dir (str): Target directory. Defaults to "".
-          extension (str): Extension. Defaults to "jpg".
+          target_dir (str): Target directory. Defaults to ''.
+          extension (str): Extension. Defaults to 'jpg'.
           yes (bool): Flag for asking to execute or not. Defaults to False.
         """
         self.target_dir: str = target_dir
@@ -37,18 +40,18 @@ class ImageSwap(object):
         # Check target_dir
         if not isinstance(self.target_dir, str) or \
                 not os.path.isdir(self.target_dir):
-            print('[ERROR] You must type a valid directory for target directory.')
+            logger.error('You must type a valid directory for target directory.')
             is_valid = False
 
         # Check extension
         if not isinstance(self.extension, str) or \
                 not self.extension:
-            print('[ERROR] You must type a extension.')
+            logger.error('You must type a extension.')
             is_valid = False
 
         # Check yes
         if not isinstance(self.yes, bool):
-            print('[ERROR] You must just type -y flag. No need to type a parameter.')
+            logger.error('You must just type -y flag. No need to type a parameter.')
             is_valid = False
 
         return is_valid
@@ -58,27 +61,28 @@ class ImageSwap(object):
 
         Swap first and second image in each directory.
         """
-        print('#---PROCESS START.---#')
         show_info(self)
         if not self._input_is_valid():
-            print('#---ERROR OCCURRED. PROCESS END.---#')
+            logger.info('Input parameter is not valid. Try again.')
             return
 
         if not self.yes:
-            user_input = ""
-            while not re.search("^[yYnN].*$", user_input):
-                user_input = input("Are you sure to execute?(y/n): ")
+            user_input = ''
+            while not re.search('^[yYnN].*$', user_input):
+                user_input = input('Are you sure to execute?(y/n): ')
 
-            if re.search("^[nN].*$", user_input):
-                print("Abort...")
-                print('#---PROCESS END.---#')
+            logger.info(f'User input: {user_input}')
+            if re.search('^[nN].*$', user_input):
+                logger.info('Abort...')
                 return
 
-        # Append "." to prefix for extension
+        logger.info('Start swaping first image and second image...')
+
+        # Append '.' to prefix for extension
         self.extension = f'.{self.extension}'
 
         for current_dir, dirs, files in os.walk(self.target_dir):
-            print(f'[INFO] Watching {current_dir}.')
+            logger.info(f'Watching {current_dir}.')
             filenames = []
             for filename in files:
                 if filename.endswith(self.extension):
@@ -86,14 +90,14 @@ class ImageSwap(object):
                     filenames.append(path)
 
             if not filenames:
-                print(
-                    f'[INFO] There are no {self.extension.upper()} files at {current_dir}'
+                logger.info(
+                    f'There are no {self.extension.upper()} files at {current_dir}'
                 )
                 continue
 
             if not 2 < len(filenames):
-                print(
-                    f'[INFO] There are not enough {self.extension.upper()} files at {current_dir}'
+                logger.info(
+                    f'There are not enough {self.extension.upper()} files at {current_dir}'
                 )
                 continue
 
@@ -107,9 +111,9 @@ class ImageSwap(object):
             os.rename(first_file, tmp_file)
             os.rename(second_file, first_file)
             os.rename(tmp_file, second_file)
-            print(f'[INFO] Swap {first_file} and {second_file}')
+            logger.info(f'Swap {first_file} and {second_file}')
 
-        print("#---PROCESS END.---#")
+        logger.info('Abort...')
 
 
 if __name__ == '__main__':
