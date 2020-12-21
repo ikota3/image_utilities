@@ -15,7 +15,7 @@ class ImageRenamer(object):
 
     def __init__(
             self,
-            target_dir: str = "",
+            target_dir: str = '',
             digit: int = 4,
             extensions: Union[str, Tuple[str]] = None,
             yes: bool = False
@@ -23,7 +23,7 @@ class ImageRenamer(object):
         """Initialize
 
         Args:
-            target_dir (str): Target directory. Defaults to "".
+            target_dir (str): Target directory. Defaults to ''.
             digit (int): Number of digits for renaming. Defaults to 4.
             extensions (Union[str, Tuple[str]]): Extensions. Defaults to None.
             yes (bool): Flag for asking to execute or not. Defaults to False.
@@ -80,7 +80,7 @@ class ImageRenamer(object):
             return
 
         if not self.yes:
-            user_input = ""
+            user_input = ''
             while not re.search('^[yYnN].*$', user_input):
                 user_input = input('Are you sure to execute?(y/n): ')
 

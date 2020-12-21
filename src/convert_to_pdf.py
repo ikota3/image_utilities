@@ -16,8 +16,8 @@ class ImageConverter(object):
 
     def __init__(
             self,
-            input_dir: str = "",
-            output_dir: str = "",
+            input_dir: str = '',
+            output_dir: str = '',
             extensions: Union[str, Tuple[str]] = None,
             force_write: bool = False,
             yes: bool = False
@@ -25,8 +25,8 @@ class ImageConverter(object):
         """Initialize
 
         Args:
-            input_dir (str): Input directory. Defaults to "".
-            output_dir (str): Output directory. Defaults to "".
+            input_dir (str): Input directory. Defaults to ''.
+            output_dir (str): Output directory. Defaults to ''.
             extensions (Union[str, Tuple[str]]): Extensions. Defaults to None.
             force_write (bool): Flag for overwrite the converted pdf. Defaults to False.
             yes (bool): Flag for asking to execute or not. Defaults to False.
@@ -89,7 +89,7 @@ class ImageConverter(object):
             return
 
         if not self.yes:
-            user_input = ""
+            user_input = ''
             while not re.search('^[yYnN].*$', user_input):
                 user_input = input('Are you sure to execute?(y/n): ')
 
