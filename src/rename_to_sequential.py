@@ -4,7 +4,10 @@ import fire
 import json
 from alive_progress import alive_bar
 from typing import Union, Tuple, List
-from utils import natural_keys, show_info
+from utils import natural_keys, show_info, setup_logger
+
+
+logger = setup_logger(__name__)
 
 
 class ImageRenamer(object):
@@ -43,24 +46,24 @@ class ImageRenamer(object):
         # Check target_dir
         if not isinstance(self.target_dir, str) or \
                 not os.path.isdir(self.target_dir):
-            print('[ERROR] You must type a valid directory for target directory.')
+            logger.error('You must type a valid directory for target directory.')
             is_valid = False
 
         # Check digit
         if not isinstance(self.digit, int) or \
                 self.digit < 3 or 9 < self.digit:
-            print('[ERROR] You must type a number for digit.(Min: 3, Max: 9)')
+            logger.error('You must type a number for digit.(Min: 3, Max: 9)')
             is_valid = False
 
         # Check extensions
         if not isinstance(self.extensions, tuple) and \
                 not isinstance(self.extensions, str):
-            print('[ERROR] You must type at least one extension.')
+            logger.error('You must type at least one extension.')
             is_valid = False
 
         # Check yes
         if not isinstance(self.yes, bool):
-            print('[ERROR] You must just type -y flag. No need to type a parameter.')
+            logger.error('You must just type -y flag. No need to type a parameter.')
             is_valid = False
 
         return is_valid
@@ -71,23 +74,24 @@ class ImageRenamer(object):
         Rename the filename in each directory to sequential number.
         It will rename recursively based on the self.target_dir.
         """
-        print('#---PROCESS START.---#')
         show_info(self)
         if not self._input_is_valid():
-            print('#---ERROR OCCURRED. PROCESS END.---#')
+            logger.info('Input parameter is not valid. Try again.')
             return
 
         if not self.yes:
             user_input = ""
-            while not re.search("^[yYnN].*$", user_input):
-                user_input = input("Are you sure to execute?(y/n): ")
+            while not re.search('^[yYnN].*$', user_input):
+                user_input = input('Are you sure to execute?(y/n): ')
 
-            if re.search("^[nN].*$", user_input):
-                print("Abort...")
-                print('#---PROCESS END.---#')
+            logger.info(f'User input: {user_input}')
+            if re.search('^[nN].*$', user_input):
+                logger.info('Abort...')
                 return
 
-        # Append "." to prefix for extensions
+        logger.info('Start renaming images to sequential number...')
+
+        # Append '.' to prefix for extensions
         extensions: Union[str | Tuple[str]] = None
         if isinstance(self.extensions, tuple):
             extensions = []
@@ -98,7 +102,7 @@ class ImageRenamer(object):
             extensions = tuple([f'.{self.extensions}'])
 
         for current_dir, dirs, files in os.walk(self.target_dir):
-            print(f'[INFO] Watching {current_dir}.')
+            logger.info(f'Watching {current_dir}.')
             filenames = []
             for filename in sorted(files):
                 if filename.endswith(extensions):
@@ -106,8 +110,8 @@ class ImageRenamer(object):
                     filenames.append(path)
 
             if not filenames:
-                print(
-                    f'[INFO] There are no {", ".join(extensions).upper()} files at {current_dir}.'
+                logger.info(
+                    f'There are no {", ".join(extensions).upper()} files at {current_dir}.'
                 )
                 continue
 
@@ -119,11 +123,11 @@ class ImageRenamer(object):
                     os.rename(filename, dst_filename)
                     bar()
 
-            print(
-                f'[INFO] Renamed {", ".join(extensions).upper()} files at {current_dir}.'
+            logger.info(
+                f'Renamed {", ".join(extensions).upper()} files at {current_dir}.'
             )
 
-        print("#---PROCESS END.---#")
+        logger.info('Abort...')
 
 
 if __name__ == '__main__':
