@@ -8,6 +8,8 @@ Image utilities using CLI.
 
 - `img2pdf`
 
+- `alive-progress`
+
 ```sh
 pip install -r requirements.txt
 ```
