@@ -77,7 +77,7 @@ def gen_random_filename(directory_name: str, extension: str) -> str:
     Returns:
         path (str): random filename(absolute path).
     """
-    path = ""
+    path = ''
     while True:
         random_filename = f'{uuid.uuid4().hex}{extension}'
         path = os.path.join(directory_name, random_filename)
