@@ -1,7 +1,35 @@
 import os
 import re
 import uuid
+import logging
 from typing import Union, List
+
+
+def setup_logger(name: str) -> logging.Logger:
+    """Set up logger.
+
+    Args:
+        name (str): name of logger.
+
+    Returns:
+        logger (logging.Logger): logger instance.
+    """
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.DEBUG)
+
+    handler = logging.StreamHandler()
+    handler.setLevel(logging.DEBUG)
+    handler_format = logging.Formatter('[%(levelname)s]: %(asctime)s - %(name)s: %(message)s')
+    handler.setFormatter(handler_format)
+    
+    logger.addHandler(handler)
+    logger.propagate = False
+    return logger
+
+
+
+logger = setup_logger(__name__)
+
 
 
 def _atoi(text: str) -> Union[int, str]:
@@ -36,7 +64,7 @@ def show_info(obj: object) -> None:
     """
     max_chars = max([len(key) for key in obj.__dict__])
     for key in sorted(obj.__dict__):
-        print(f'{key: <{max_chars}} -> {obj.__dict__[key]}')
+        logger.info(f'{key: <{max_chars}} -> {obj.__dict__[key]}')
 
 
 def gen_random_filename(directory_name: str, extension: str) -> str:
@@ -45,6 +73,9 @@ def gen_random_filename(directory_name: str, extension: str) -> str:
     Args:
         directory_name (str): directory name.
         extension (str): extension includes dot.
+    
+    Returns:
+        path (str): random filename(absolute path).
     """
     path = ""
     while True:

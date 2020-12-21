@@ -5,7 +5,10 @@ import json
 import img2pdf
 from PIL import Image
 from typing import Union, Tuple
-from utils import natural_keys, show_info
+from utils import natural_keys, show_info, setup_logger
+
+
+logger = setup_logger(__name__)
 
 
 class ImageConverter(object):
@@ -47,29 +50,29 @@ class ImageConverter(object):
         # Check input_dir
         if not isinstance(self.input_dir, str) or \
                 not os.path.isdir(self.input_dir):
-            print('[ERROR] You must type a valid directory for input directory.')
+            logger.error('You must type a valid directory for input directory.')
             is_valid = False
 
         # Check output_dir
         if not isinstance(self.output_dir, str) or \
                 not os.path.isdir(self.output_dir):
-            print('[ERROR] You must type a valid directory for output directory.')
+            logger.error('You must type a valid directory for output directory.')
             is_valid = False
 
         # Check extensions
         if not isinstance(self.extensions, tuple) and \
                 not isinstance(self.extensions, str):
-            print('[ERROR] You must type at least one extension.')
+            logger.error('You must type at least one extension.')
             is_valid = False
 
         # Check force_write
         if not isinstance(self.force_write, bool):
-            print('[ERROR] You must just type -f flag. No need to type a parameter.')
+            logger.error('You must just type -f flag. No need to type a parameter.')
             is_valid = False
 
         # Check yes
         if not isinstance(self.yes, bool):
-            print('[ERROR] You must just type -y flag. No need to type a parameter.')
+            logger.error('You must just type -y flag. No need to type a parameter.')
             is_valid = False
 
         return is_valid
@@ -80,23 +83,24 @@ class ImageConverter(object):
         Convert images in each directory to pdf.
         It will convert recursively based on the self.target_dir.
         """
-        print('#---PROCESS START.---#')
         show_info(self)
         if not self._input_is_valid():
-            print('#---ERROR OCCURRED. PROCESS END.---#')
+            logger.info('Input parameter is not valid. Try again.')
             return
 
         if not self.yes:
             user_input = ""
-            while not re.search("^[yYnN].*$", user_input):
-                user_input = input("Are you sure to execute?(y/n): ")
+            while not re.search('^[yYnN].*$', user_input):
+                user_input = input('Are you sure to execute?(y/n): ')
 
-            if re.search("^[nN].*$", user_input):
-                print("Abort...")
-                print('#---PROCESS END.---#')
+            logger.info(f'User input: {user_input}')
+            if re.search('^[nN].*$', user_input):
+                logger.info('Abort...')
                 return
 
-        # Append "." to prefix for extensions
+        logger.info('Start converting images to pdf...')
+
+        # Append '.' to prefix for extensions
         extensions: Union[str | Tuple[str]] = None
         if isinstance(self.extensions, tuple):
             extensions = []
@@ -107,7 +111,7 @@ class ImageConverter(object):
             extensions = tuple([f'.{self.extensions}'])
 
         for current_dir, dirs, files in os.walk(self.input_dir):
-            print(f'[INFO] Watching {current_dir}.')
+            logger.info(f'Watching {current_dir}.')
             images = []
             for filename in sorted(files, key=natural_keys):
                 if filename.endswith(extensions):
@@ -115,8 +119,8 @@ class ImageConverter(object):
                     images.append(path)
 
             if not images:
-                print(
-                    f'[INFO] There are no {", ".join(extensions).upper()} files at {current_dir}.'
+                logger.info(
+                    f'There are no {", ".join(extensions).upper()} files at {current_dir}.'
                 )
                 continue
 
@@ -127,17 +131,17 @@ class ImageConverter(object):
             if self.force_write:
                 with open(pdf_filename, 'wb') as f:
                     f.write(img2pdf.convert(images))
-                print(f'[INFO] Created {pdf_filename}!')
+                logger.info(f'Created {pdf_filename}!')
             else:
                 if os.path.exists(pdf_filename):
-                    print(f'[ERROR] {pdf_filename} already exist!')
+                    logger.warning(f'{pdf_filename} already exist!')
                     continue
 
                 with open(pdf_filename, 'wb') as f:
                     f.write(img2pdf.convert(images))
-                print(f'[INFO] Created {pdf_filename}!')
+                logger.info(f'Created {pdf_filename}!')
 
-        print("#---PROCESS END.---#")
+        logger.info('Abort...')
 
 
 if __name__ == '__main__':
