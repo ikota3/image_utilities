@@ -19,17 +19,17 @@ def setup_logger(name: str) -> logging.Logger:
 
     handler = logging.StreamHandler()
     handler.setLevel(logging.DEBUG)
-    handler_format = logging.Formatter('[%(levelname)s]: %(asctime)s - %(name)s: %(message)s')
+    handler_format = logging.Formatter(
+        '[%(levelname)s]: %(asctime)s - %(name)s: %(message)s'
+    )
     handler.setFormatter(handler_format)
-    
+
     logger.addHandler(handler)
     logger.propagate = False
     return logger
 
 
-
 logger = setup_logger(__name__)
-
 
 
 def _atoi(text: str) -> Union[int, str]:
@@ -73,7 +73,7 @@ def gen_random_filename(directory_name: str, extension: str) -> str:
     Args:
         directory_name (str): directory name.
         extension (str): extension includes dot.
-    
+
     Returns:
         path (str): random filename(absolute path).
     """

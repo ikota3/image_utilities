@@ -50,13 +50,17 @@ class ImageConverter(object):
         # Check input_dir
         if not isinstance(self.input_dir, str) or \
                 not os.path.isdir(self.input_dir):
-            logger.error('You must type a valid directory for input directory.')
+            logger.error(
+                'You must type a valid directory for input directory.'
+            )
             is_valid = False
 
         # Check output_dir
         if not isinstance(self.output_dir, str) or \
                 not os.path.isdir(self.output_dir):
-            logger.error('You must type a valid directory for output directory.')
+            logger.error(
+                'You must type a valid directory for output directory.'
+            )
             is_valid = False
 
         # Check extensions
@@ -67,12 +71,16 @@ class ImageConverter(object):
 
         # Check force_write
         if not isinstance(self.force_write, bool):
-            logger.error('You must just type -f flag. No need to type a parameter.')
+            logger.error(
+                'You must just type -f flag. No need to type a parameter.'
+            )
             is_valid = False
 
         # Check yes
         if not isinstance(self.yes, bool):
-            logger.error('You must just type -y flag. No need to type a parameter.')
+            logger.error(
+                'You must just type -y flag. No need to type a parameter.'
+            )
             is_valid = False
 
         return is_valid

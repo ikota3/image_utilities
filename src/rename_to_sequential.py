@@ -46,7 +46,9 @@ class ImageRenamer(object):
         # Check target_dir
         if not isinstance(self.target_dir, str) or \
                 not os.path.isdir(self.target_dir):
-            logger.error('You must type a valid directory for target directory.')
+            logger.error(
+                'You must type a valid directory for target directory.'
+            )
             is_valid = False
 
         # Check digit
@@ -63,7 +65,9 @@ class ImageRenamer(object):
 
         # Check yes
         if not isinstance(self.yes, bool):
-            logger.error('You must just type -y flag. No need to type a parameter.')
+            logger.error(
+                'You must just type -y flag. No need to type a parameter.'
+            )
             is_valid = False
 
         return is_valid
