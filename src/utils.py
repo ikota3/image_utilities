@@ -86,3 +86,22 @@ def gen_random_filename(directory_name: str, extension: str) -> str:
         break
 
     return path
+
+
+def append_prefix(targets: Union[str, list, tuple], prefix: str) -> tuple[str]:
+    """Append prefix to targets.
+
+    Args:
+        targets (Union[str, list, tuple]): target to add prefix.
+        prefix (str): string prifix.
+
+    Returns:
+        tuple[str]: tuple of string with prefix added
+    """
+    if isinstance(targets, str):
+        return tuple([prefix + targets])
+    elif isinstance(targets, list) or isinstance(targets, tuple):
+        ret_val = []
+        for target in targets:
+            ret_val.append(prefix + target)
+        return tuple(ret_val)

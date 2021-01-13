@@ -1,11 +1,9 @@
 import re
 import os
 import fire
-import json
 import img2pdf
-from PIL import Image
 from typing import Union, Tuple
-from utils import natural_keys, show_info, setup_logger
+from utils import natural_keys, show_info, setup_logger, append_prefix
 
 
 logger = setup_logger(__name__)
@@ -35,7 +33,7 @@ class ImageConverter(object):
         self.output_dir: str = output_dir
         if not extensions:
             extensions = ('jpg')
-        self.extensions: Tuple[str] = extensions
+        self.extensions: Tuple[str] = append_prefix(extensions, '.')
         self.force_write: bool = force_write
         self.yes: bool = yes
 
@@ -108,27 +106,17 @@ class ImageConverter(object):
 
         logger.info('Start converting images to pdf...')
 
-        # Append '.' to prefix for extensions
-        extensions: Union[str | Tuple[str]] = None
-        if isinstance(self.extensions, tuple):
-            extensions = []
-            for extension in self.extensions:
-                extensions.append(f'.{extension}')
-            extensions = tuple(extensions)
-        elif isinstance(self.extensions, str):
-            extensions = tuple([f'.{self.extensions}'])
-
         for current_dir, dirs, files in os.walk(self.input_dir):
             logger.info(f'Watching {current_dir}.')
             images = []
             for filename in sorted(files, key=natural_keys):
-                if filename.endswith(extensions):
+                if filename.endswith(self.extensions):
                     path = os.path.join(current_dir, filename)
                     images.append(path)
 
             if not images:
                 logger.info(
-                    f'There are no {", ".join(extensions).upper()} files at {current_dir}.'
+                    f'There are no {", ".join(self.extensions).upper()} files at {current_dir}.'
                 )
                 continue
 
@@ -142,7 +130,7 @@ class ImageConverter(object):
                 logger.info(f'Created {pdf_filename}!')
             else:
                 if os.path.exists(pdf_filename):
-                    logger.warning(f'{pdf_filename} already exist!')
+                    logger.warning(f'{pdf_filename} already exist! SKIP!')
                     continue
 
                 with open(pdf_filename, 'wb') as f:

@@ -1,8 +1,6 @@
 import re
 import os
 import fire
-import uuid
-from typing import Union, Tuple
 from utils import show_info, natural_keys, gen_random_filename, setup_logger
 
 
@@ -15,7 +13,7 @@ class ImageSwap(object):
     def __init__(
         self,
         target_dir: str = '',
-        extension: str = 'jpg',
+        extension: str = '',
         yes: bool = False
     ):
         """Initialize
@@ -26,7 +24,9 @@ class ImageSwap(object):
           yes (bool): Flag for asking to execute or not. Defaults to False.
         """
         self.target_dir: str = target_dir
-        self.extension: str = extension
+        if extension == '':
+            extension = 'jpg'
+        self.extension: str = f'.{extension}'
         self.yes: bool = yes
 
     def _input_is_valid(self) -> bool:
@@ -81,9 +81,6 @@ class ImageSwap(object):
                 return
 
         logger.info('Start swaping first image and second image...')
-
-        # Append '.' to prefix for extension
-        self.extension = f'.{self.extension}'
 
         for current_dir, dirs, files in os.walk(self.target_dir):
             logger.info(f'Watching {current_dir}.')
