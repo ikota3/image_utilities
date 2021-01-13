@@ -2,6 +2,10 @@
 
 Image utilities using CLI.
 
+## TODO
+
+Add color to logger.
+
 ## Requirements
 
 - `fire`
