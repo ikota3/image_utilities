@@ -2,6 +2,7 @@ import re
 import os
 import fire
 import img2pdf
+from validator import is_dir, is_extension, is_bool
 from typing import Union, Tuple
 from utils import natural_keys, show_info, setup_logger, append_prefix
 
@@ -46,36 +47,34 @@ class ImageConverter(object):
         is_valid = True
 
         # Check input_dir
-        if not isinstance(self.input_dir, str) or \
-                not os.path.isdir(self.input_dir):
+        if not is_dir(self.input_dir):
             logger.error(
                 'You must type a valid directory for input directory.'
             )
             is_valid = False
 
         # Check output_dir
-        if not isinstance(self.output_dir, str) or \
-                not os.path.isdir(self.output_dir):
+        if not is_dir(self.output_dir):
             logger.error(
                 'You must type a valid directory for output directory.'
             )
             is_valid = False
 
         # Check extensions
-        if not isinstance(self.extensions, tuple) and \
-                not isinstance(self.extensions, str):
-            logger.error('You must type at least one extension.')
-            is_valid = False
+        for extension in self.extensions:
+            if not is_extension(extension):
+                logger.error('You must type at least one extension.')
+                is_valid = False
 
         # Check force_write
-        if not isinstance(self.force_write, bool):
+        if not is_bool(self.force_write):
             logger.error(
                 'You must just type -f flag. No need to type a parameter.'
             )
             is_valid = False
 
         # Check yes
-        if not isinstance(self.yes, bool):
+        if not is_bool(self.yes):
             logger.error(
                 'You must just type -y flag. No need to type a parameter.'
             )
