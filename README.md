@@ -4,7 +4,8 @@ Image utilities using CLI.
 
 ## TODO
 
-Add color to logger.
+- [ ] Add color to logger.
+- [ ] Fix skew image feature.
 
 ## Requirements
 
