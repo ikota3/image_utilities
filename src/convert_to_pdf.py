@@ -3,21 +3,21 @@ import os
 import fire
 import img2pdf
 from validator import is_dir, is_extension, is_bool
-from typing import Union, Tuple
+from typing import Union
 from utils import natural_keys, show_info, setup_logger, append_prefix
 
 
 logger = setup_logger(__name__)
 
 
-class ImageConverter(object):
+class ImageConverter():
     """Class for convert images to pdf."""
 
     def __init__(
             self,
             input_dir: str = '',
             output_dir: str = '',
-            extensions: Union[str, Tuple[str]] = None,
+            extensions: Union[str, tuple[str]] = None,
             force_write: bool = False,
             yes: bool = False
     ):
@@ -26,7 +26,7 @@ class ImageConverter(object):
         Args:
             input_dir (str): Input directory. Defaults to ''.
             output_dir (str): Output directory. Defaults to ''.
-            extensions (Union[str, Tuple[str]]): Extensions. Defaults to None.
+            extensions (Union[str, Tuple[str]]): Extensions. Defaults to ('jpg').
             force_write (bool): Flag for overwrite the converted pdf. Defaults to False.
             yes (bool): Flag for asking to execute or not. Defaults to False.
         """
@@ -34,7 +34,7 @@ class ImageConverter(object):
         self.output_dir: str = output_dir
         if not extensions:
             extensions = ('jpg')
-        self.extensions: Tuple[str] = append_prefix(extensions, '.')
+        self.extensions: Union[str, tuple[str]] = append_prefix(extensions, '.')
         self.force_write: bool = force_write
         self.yes: bool = yes
 
@@ -86,7 +86,7 @@ class ImageConverter(object):
         """Convert images to pdf.
 
         Convert images in each directory to pdf.
-        It will convert recursively based on the self.target_dir.
+        It will convert recursively based on the self.input_dir.
         """
         show_info(self)
         if not self._input_is_valid():
