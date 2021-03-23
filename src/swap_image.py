@@ -8,7 +8,7 @@ from utils import show_info, natural_keys, gen_random_filename, setup_logger
 logger = setup_logger(__name__)
 
 
-class ImageSwap(object):
+class ImageSwap():
     """Class for swaping images."""
 
     def __init__(

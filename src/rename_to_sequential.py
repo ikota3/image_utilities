@@ -10,7 +10,7 @@ from utils import natural_keys, show_info, setup_logger, append_prefix
 logger = setup_logger(__name__)
 
 
-class ImageRenamer(object):
+class ImageRenamer():
     """Class for renaming images."""
 
     def __init__(
