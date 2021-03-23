@@ -28,3 +28,17 @@ def is_bool(target: bool):
         return False
 
     return True
+
+
+def is_digit(target: int, min_digit: int, max_digit: int, exclude: bool = False):
+    if not isinstance(target, int):
+        return False
+
+    if exclude:
+        if min_digit < target < max_digit:
+            return True
+    else:
+        if min_digit <= target <= max_digit:
+            return True
+
+    return False
