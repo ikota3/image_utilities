@@ -2,7 +2,8 @@ import re
 import os
 import fire
 from alive_progress import alive_bar
-from typing import Union, Tuple
+from typing import Union
+from validator import is_dir, is_extension, is_bool, is_digit
 from utils import natural_keys, show_info, setup_logger, append_prefix
 
 
@@ -16,7 +17,7 @@ class ImageRenamer(object):
             self,
             target_dir: str = '',
             digit: int = 4,
-            extensions: Union[str, Tuple[str]] = None,
+            extensions: Union[str, tuple[str]] = None,
             yes: bool = False
     ):
         """Initialize
@@ -31,7 +32,7 @@ class ImageRenamer(object):
         self.digit: int = digit
         if not extensions:
             extensions = ('jpg')
-        self.extensions: Tuple[str] = append_prefix(extensions, ".")
+        self.extensions: Union[str, tuple[str]] = append_prefix(extensions, ".")
         self.yes: bool = yes
 
     def _input_is_valid(self) -> bool:
@@ -43,27 +44,25 @@ class ImageRenamer(object):
         is_valid = True
 
         # Check target_dir
-        if not isinstance(self.target_dir, str) or \
-                not os.path.isdir(self.target_dir):
+        if not is_dir(self.target_dir):
             logger.error(
                 'You must type a valid directory for target directory.'
             )
             is_valid = False
 
         # Check digit
-        if not isinstance(self.digit, int) or \
-                self.digit < 3 or 9 < self.digit:
+        if not is_digit(self.digit, 3, 9, False):
             logger.error('You must type a number for digit.(Min: 3, Max: 9)')
             is_valid = False
 
         # Check extensions
-        if not isinstance(self.extensions, tuple) and \
-                not isinstance(self.extensions, str):
-            logger.error('You must type at least one extension.')
-            is_valid = False
+        for extension in self.extensions:
+            if not is_extension(extension):
+                logger.error('You must type at least one extension.')
+                is_valid = False
 
         # Check yes
-        if not isinstance(self.yes, bool):
+        if not is_bool(self.yes):
             logger.error(
                 'You must just type -y flag. No need to type a parameter.'
             )
