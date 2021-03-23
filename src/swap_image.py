@@ -1,6 +1,7 @@
 import re
 import os
 import fire
+from validator import is_dir, is_extension, is_bool
 from utils import show_info, natural_keys, gen_random_filename, setup_logger
 
 
@@ -38,21 +39,19 @@ class ImageSwap(object):
         is_valid = True
 
         # Check target_dir
-        if not isinstance(self.target_dir, str) or \
-                not os.path.isdir(self.target_dir):
+        if not is_dir(self.target_dir):
             logger.error(
                 'You must type a valid directory for target directory.'
             )
             is_valid = False
 
         # Check extension
-        if not isinstance(self.extension, str) or \
-                not self.extension:
+        if not is_extension(self.extension):
             logger.error('You must type a extension.')
             is_valid = False
 
         # Check yes
-        if not isinstance(self.yes, bool):
+        if not is_bool(self.yes):
             logger.error(
                 'You must just type -y flag. No need to type a parameter.'
             )
