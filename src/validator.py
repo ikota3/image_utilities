@@ -3,10 +3,20 @@ import os
 
 
 def is_dir(target: str):
-    """Check target is dir path."""
+    """Check target is dir."""
     if not isinstance(target, str):
         return False
     if not os.path.isdir(target):
+        return False
+
+    return True
+
+
+def is_file(target: str):
+    """Check target is file."""
+    if not isinstance(target, str):
+        return False
+    if not os.path.isfile(target):
         return False
 
     return True

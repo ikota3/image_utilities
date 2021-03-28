@@ -1,4 +1,4 @@
-from src.validator import is_dir, is_extension, is_bool, is_in_range
+from src.validator import is_dir, is_file, is_extension, is_bool, is_in_range
 
 
 def test_is_dir__boolean_should_return_false():
@@ -15,6 +15,24 @@ def test_is_dir__filename_should_return_false():
 
 def test_is_dir__directory_should_return_true():
     ret_val = is_dir('tests/func/')
+    expected_val = True
+    assert ret_val == expected_val
+
+
+def test_is_file__boolean_should_return_false():
+    ret_val = is_file(False)
+    expected_val = False
+    assert ret_val == expected_val
+
+
+def test_is_file__directory_should_return_false():
+    ret_val = is_file('tests/func/')
+    expected_val = False
+    assert ret_val == expected_val
+
+
+def test_is_file__filename_should_return_true():
+    ret_val = is_file('tests/func/test_validator.py')
     expected_val = True
     assert ret_val == expected_val
 
