@@ -30,15 +30,15 @@ def is_bool(target: bool):
     return True
 
 
-def is_digit(target: int, min_digit: int, max_digit: int, exclude: bool = False):
+def is_in_range(target: int, min_num: int, max_num: int, exclude: bool = False):
     if not isinstance(target, int):
         return False
 
     if exclude:
-        if min_digit < target < max_digit:
+        if min_num < target < max_num:
             return True
     else:
-        if min_digit <= target <= max_digit:
+        if min_num <= target <= max_num:
             return True
 
     return False

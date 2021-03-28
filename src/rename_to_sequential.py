@@ -3,7 +3,7 @@ import os
 import fire
 from alive_progress import alive_bar
 from typing import Union
-from validator import is_dir, is_extension, is_bool, is_digit
+from validator import is_dir, is_extension, is_bool, is_in_range
 from utils import natural_keys, show_info, setup_logger, append_prefix
 
 
@@ -51,7 +51,7 @@ class ImageRenamer():
             is_valid = False
 
         # Check digit
-        if not is_digit(self.digit, 3, 9, False):
+        if not is_in_range(self.digit, 3, 9, False):
             logger.error('You must type a number for digit.(Min: 3, Max: 9)')
             is_valid = False
 

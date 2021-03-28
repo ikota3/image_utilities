@@ -1,4 +1,4 @@
-from src.validator import is_dir, is_extension, is_bool, is_digit
+from src.validator import is_dir, is_extension, is_bool, is_in_range
 
 
 def test_is_dir__boolean_should_return_false():
@@ -55,131 +55,131 @@ def test_is_bool__boolean_should_return_true():
     assert ret_val == expected_val
 
 
-def test_is_digit__string_digit_should_return_false():
+def test_is_in_range__string_num_should_return_false():
     target = '3'
-    min_digit = 1
-    max_digit = 5
+    min_num = 1
+    max_num = 5
     exclude = False
-    ret_val = is_digit(target, min_digit, max_digit, exclude)
+    ret_val = is_in_range(target, min_num, max_num, exclude)
     expected_val = False
     assert ret_val == expected_val
 
 
-def test_is_digit__minimum_digit_should_return_false_when_exclude_option_is_true():
+def test_is_in_range__minimum_num_should_return_false_when_exclude_option_is_true():
     target = 1
-    min_digit = 1
-    max_digit = 5
+    min_num = 1
+    max_num = 5
     exclude = True
-    ret_val = is_digit(target, min_digit, max_digit, exclude)
+    ret_val = is_in_range(target, min_num, max_num, exclude)
     expected = False
     assert ret_val == expected
 
 
-def test_is_digit__maximum_digit_should_return_false_when_exclude_option_is_true():
+def test_is_in_range__maximum_num_should_return_false_when_exclude_option_is_true():
     target = 5
-    min_digit = 1
-    max_digit = 5
+    min_num = 1
+    max_num = 5
     exclude = True
-    ret_val = is_digit(target, min_digit, max_digit, exclude)
+    ret_val = is_in_range(target, min_num, max_num, exclude)
     expected = False
     assert ret_val == expected
 
 
-def test_is_digit__minimum_digit_should_return_true_when_exclude_option_is_false():
+def test_is_in_range__minimum_num_should_return_true_when_exclude_option_is_false():
     target = 1
-    min_digit = 1
-    max_digit = 5
+    min_num = 1
+    max_num = 5
     exclude = False
-    ret_val = is_digit(target, min_digit, max_digit, exclude)
+    ret_val = is_in_range(target, min_num, max_num, exclude)
     expected = True
     assert ret_val == expected
 
 
-def test_is_digit__maximum_digit_should_return_true_when_exclude_option_is_false():
+def test_is_in_range__maximum_num_should_return_true_when_exclude_option_is_false():
     target = 5
-    min_digit = 1
-    max_digit = 5
+    min_num = 1
+    max_num = 5
     exclude = False
-    ret_val = is_digit(target, min_digit, max_digit, exclude)
+    ret_val = is_in_range(target, min_num, max_num, exclude)
     expected = True
     assert ret_val == expected
 
 
-def test_is_digit__nearest_to_minimum_digit_in_range_should_return_true_when_exclude_option_is_true():
+def test_is_in_range__nearest_to_minimum_num_in_range_should_return_true_when_exclude_option_is_true():
     target = 2
-    min_digit = 1
-    max_digit = 5
+    min_num = 1
+    max_num = 5
     exclude = True
-    ret_val = is_digit(target, min_digit, max_digit, exclude)
+    ret_val = is_in_range(target, min_num, max_num, exclude)
     expected = True
     assert ret_val == expected
 
 
-def test_is_digit__nearest_to_maximum_digit_in_range_should_return_true_when_exclude_option_is_true():
+def test_is_in_range__nearest_to_maximum_num_in_range_should_return_true_when_exclude_option_is_true():
     target = 4
-    min_digit = 1
-    max_digit = 5
+    min_num = 1
+    max_num = 5
     exclude = True
-    ret_val = is_digit(target, min_digit, max_digit, exclude)
+    ret_val = is_in_range(target, min_num, max_num, exclude)
     expected = True
     assert ret_val == expected
 
 
-def test_is_digit__nearest_to_minimum_digit_in_range_should_return_true_when_exclude_option_is_false():
+def test_is_in_range__nearest_to_minimum_num_in_range_should_return_true_when_exclude_option_is_false():
     target = 2
-    min_digit = 1
-    max_digit = 5
+    min_num = 1
+    max_num = 5
     exclude = False
-    ret_val = is_digit(target, min_digit, max_digit, exclude)
+    ret_val = is_in_range(target, min_num, max_num, exclude)
     expected = True
     assert ret_val == expected
 
 
-def test_is_digit__nearest_to_maximum_digit_in_range_should_return_true_when_exclude_option_is_false():
+def test_is_in_range__nearest_to_maximum_num_in_range_should_return_true_when_exclude_option_is_false():
     target = 4
-    min_digit = 1
-    max_digit = 5
+    min_num = 1
+    max_num = 5
     exclude = False
-    ret_val = is_digit(target, min_digit, max_digit, exclude)
+    ret_val = is_in_range(target, min_num, max_num, exclude)
     expected = True
     assert ret_val == expected
 
 
-def test_is_digit__nearest_to_minimum_digit_out_of_range_should_return_false_when_exclude_option_is_true():
+def test_is_in_range__nearest_to_minimum_num_out_of_range_should_return_false_when_exclude_option_is_true():
     target = 0
-    min_digit = 1
-    max_digit = 5
+    min_num = 1
+    max_num = 5
     exclude = True
-    ret_val = is_digit(target, min_digit, max_digit, exclude)
+    ret_val = is_in_range(target, min_num, max_num, exclude)
     expected = False
     assert ret_val == expected
 
 
-def test_is_digit__nearest_to_maximum_digit_out_of_range_should_return_false_when_exclude_option_is_true():
+def test_is_in_range__nearest_to_maximum_num_out_of_range_should_return_false_when_exclude_option_is_true():
     target = 6
-    min_digit = 1
-    max_digit = 5
+    min_num = 1
+    max_num = 5
     exclude = True
-    ret_val = is_digit(target, min_digit, max_digit, exclude)
+    ret_val = is_in_range(target, min_num, max_num, exclude)
     expected = False
     assert ret_val == expected
 
 
-def test_is_digit__nearest_to_minimum_digit_out_of_range_should_return_false_when_exclude_option_is_false():
+def test_is_in_range__nearest_to_minimum_num_out_of_range_should_return_false_when_exclude_option_is_false():
     target = 0
-    min_digit = 1
-    max_digit = 5
+    min_num = 1
+    max_num = 5
     exclude = False
-    ret_val = is_digit(target, min_digit, max_digit, exclude)
+    ret_val = is_in_range(target, min_num, max_num, exclude)
     expected = False
     assert ret_val == expected
 
 
-def test_is_digit__nearest_to_maximum_digit_out_of_range_should_return_false_when_exclude_option_is_false():
+def test_is_in_range__nearest_to_maximum_num_out_of_range_should_return_false_when_exclude_option_is_false():
     target = 6
-    min_digit = 1
-    max_digit = 5
+    min_num = 1
+    max_num = 5
     exclude = False
-    ret_val = is_digit(target, min_digit, max_digit, exclude)
+    ret_val = is_in_range(target, min_num, max_num, exclude)
     expected = False
     assert ret_val == expected
