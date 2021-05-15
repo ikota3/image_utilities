@@ -106,7 +106,7 @@ class ImageRenamer():
         for current_dir, dirs, files in os.walk(self.target_dir):
             logger.info(f'Watching {current_dir}.')
             filenames = []
-            for filename in sorted(files):
+            for filename in sorted(files, key=natural_keys):
                 if filename.endswith(self.extensions):
                     path = os.path.join(current_dir, filename)
                     filenames.append(path)
@@ -118,7 +118,7 @@ class ImageRenamer():
                 continue
 
             with alive_bar(len(filenames), bar='filling') as bar:
-                for i, filename in enumerate(sorted(filenames, key=natural_keys), self.initial_number):
+                for i, filename in enumerate(filenames, self.initial_number):
                     _, extension = os.path.splitext(filename)
                     dst_filename = os.path.join(
                         current_dir, f'{i:0{self.digit}}{extension}')
