@@ -121,6 +121,13 @@ Rename images in each directory to sequential number.
   - extension types to rename.
   - type: str | tuple(str)
 
+- `-i`, `--initial_number`
+
+  - **optional parameter.**
+  - **default parameter is `1`.**
+  - initial number to use as a starting point.
+  - type: int
+
 - `-y`, `--yes`
 
   - **optional parameter.**

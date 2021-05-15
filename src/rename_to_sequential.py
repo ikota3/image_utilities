@@ -3,7 +3,7 @@ import os
 import fire
 from alive_progress import alive_bar
 from typing import Union
-from validator import is_dir, is_extension, is_bool, is_in_range
+from validator import is_dir, is_extension, is_bool, is_in_range, is_positive_number
 from utils import natural_keys, show_info, setup_logger, append_prefix
 
 
@@ -18,6 +18,7 @@ class ImageRenamer():
             target_dir: str = '',
             digit: int = 4,
             extensions: Union[str, tuple[str]] = None,
+            initial_number: int = 1,
             yes: bool = False
     ):
         """Initialize
@@ -26,6 +27,7 @@ class ImageRenamer():
             target_dir (str): Target directory. Defaults to ''.
             digit (int): Number of digits for renaming. Defaults to 4.
             extensions (Union[str, Tuple[str]]): Extensions. Defaults to None.
+            initial_number (int): Initial number. Defaults to 1.
             yes (bool): Flag for asking to execute or not. Defaults to False.
         """
         self.target_dir: str = target_dir
@@ -33,6 +35,7 @@ class ImageRenamer():
         if not extensions:
             extensions = ('jpg')
         self.extensions: Union[str, tuple[str]] = append_prefix(extensions, ".")
+        self.initial_number: int = initial_number
         self.yes: bool = yes
 
     def _input_is_valid(self) -> bool:
@@ -60,6 +63,13 @@ class ImageRenamer():
             if not is_extension(extension):
                 logger.error('You must type at least one extension.')
                 is_valid = False
+
+        # Check initial_number
+        if not is_positive_number(self.initial_number):
+            logger.error(
+                'You must type a positive number or zero.'
+            )
+            is_valid = False
 
         # Check yes
         if not is_bool(self.yes):
@@ -108,10 +118,10 @@ class ImageRenamer():
                 continue
 
             with alive_bar(len(filenames), bar='filling') as bar:
-                for i, filename in enumerate(sorted(filenames, key=natural_keys)):
+                for i, filename in enumerate(sorted(filenames, key=natural_keys), self.initial_number):
                     _, extension = os.path.splitext(filename)
                     dst_filename = os.path.join(
-                        current_dir, f'{i + 1:0{self.digit}}{extension}')
+                        current_dir, f'{i:0{self.digit}}{extension}')
                     os.rename(filename, dst_filename)
                     bar()
 
