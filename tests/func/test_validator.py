@@ -1,4 +1,4 @@
-from src.validator import is_dir, is_file, is_extension, is_bool, is_in_range
+from src.validator import is_dir, is_file, is_extension, is_bool, is_in_range, is_positive_number
 
 
 def test_is_dir__boolean_should_return_false():
@@ -199,5 +199,33 @@ def test_is_in_range__nearest_to_maximum_num_out_of_range_should_return_false_wh
     max_num = 5
     exclude = False
     ret_val = is_in_range(target, min_num, max_num, exclude)
+    expected = False
+    assert ret_val == expected
+
+
+def test_is_positive_number__string_should_return_false():
+    target = '10'
+    ret_val = is_positive_number(target)
+    expected = False
+    assert ret_val == expected
+
+
+def test_is_positive_number__positive_number_should_return_true():
+    target = 1
+    ret_val = is_positive_number(target)
+    expected = True
+    assert ret_val == expected
+
+
+def test_is_positive_number__zero_should_return_true():
+    target = 0
+    ret_val = is_positive_number(target)
+    expected = True
+    assert ret_val == expected
+
+
+def test_is_positive_number__negative_number_should_return_false():
+    target = -1
+    ret_val = is_positive_number(target)
     expected = False
     assert ret_val == expected

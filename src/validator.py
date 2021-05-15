@@ -2,7 +2,7 @@ import re
 import os
 
 
-def is_dir(target: str):
+def is_dir(target: str) -> bool:
     """Check target is dir."""
     if not isinstance(target, str):
         return False
@@ -12,7 +12,7 @@ def is_dir(target: str):
     return True
 
 
-def is_file(target: str):
+def is_file(target: str) -> bool:
     """Check target is file."""
     if not isinstance(target, str):
         return False
@@ -22,7 +22,7 @@ def is_file(target: str):
     return True
 
 
-def is_extension(target: str):
+def is_extension(target: str) -> bool:
     """Check target is extension(.ext)."""
     if not isinstance(target, str):
         return False
@@ -32,7 +32,7 @@ def is_extension(target: str):
     return True
 
 
-def is_bool(target: bool):
+def is_bool(target: bool) -> bool:
     """Check target is boolean."""
     if not isinstance(target, bool):
         return False
@@ -40,7 +40,7 @@ def is_bool(target: bool):
     return True
 
 
-def is_in_range(target: int, min_num: int, max_num: int, exclude: bool = False):
+def is_in_range(target: int, min_num: int, max_num: int, exclude: bool = False) -> bool:
     if not isinstance(target, int):
         return False
 
@@ -52,3 +52,13 @@ def is_in_range(target: int, min_num: int, max_num: int, exclude: bool = False):
             return True
 
     return False
+
+
+def is_positive_number(target: int) -> bool:
+    if not isinstance(target, int):
+        return False
+
+    if target < 0:
+        return False
+
+    return True
