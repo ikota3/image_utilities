@@ -124,8 +124,15 @@ Rename images in each directory to sequential number.
 - `-i`, `--initial_number`
 
   - **optional parameter.**
-  - **default parameter is `1`.**
+  - **default parameter is 1.**
   - initial number to use as a starting point.
+  - type: int
+
+- `-s`, `--step`
+
+  - **optional parameter.**
+  - **default parameter is 1.**
+  - numbers to step at each point.
   - type: int
 
 - `-y`, `--yes`
