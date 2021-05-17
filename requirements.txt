@@ -1,6 +1,4 @@
 fire
 img2pdf
 alive-progress
-numpy
-opencv-python
 pytest
