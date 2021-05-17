@@ -4,7 +4,7 @@ import fire
 from alive_progress import alive_bar
 from typing import Union
 from validator import is_dir, is_extension, is_bool, is_in_range, is_positive_number
-from utils import natural_keys, show_info, setup_logger, append_prefix
+from utils import natural_keys, show_info, setup_logger, append_prefix, enumerate_with_step
 
 
 logger = setup_logger(__name__)
@@ -19,6 +19,7 @@ class ImageRenamer():
             digit: int = 4,
             extensions: Union[str, tuple[str]] = None,
             initial_number: int = 1,
+            step: int = 1,
             yes: bool = False
     ):
         """Initialize
@@ -28,6 +29,7 @@ class ImageRenamer():
             digit (int): Number of digits for renaming. Defaults to 4.
             extensions (Union[str, Tuple[str]]): Extensions. Defaults to None.
             initial_number (int): Initial number. Defaults to 1.
+            step (int): Step. Defaults to 1.
             yes (bool): Flag for asking to execute or not. Defaults to False.
         """
         self.target_dir: str = target_dir
@@ -36,6 +38,7 @@ class ImageRenamer():
             extensions = ('jpg')
         self.extensions: Union[str, tuple[str]] = append_prefix(extensions, ".")
         self.initial_number: int = initial_number
+        self.step = step
         self.yes: bool = yes
 
     def _input_is_valid(self) -> bool:
@@ -49,25 +52,32 @@ class ImageRenamer():
         # Check target_dir
         if not is_dir(self.target_dir):
             logger.error(
-                'You must type a valid directory for target directory.'
+                'You must type a valid directory for TARGET DIRECTORY.'
             )
             is_valid = False
 
         # Check digit
         if not is_in_range(self.digit, 3, 9, False):
-            logger.error('You must type a number for digit.(Min: 3, Max: 9)')
+            logger.error('You must type a number for DIGIT.(Min: 3, Max: 9)')
             is_valid = False
 
         # Check extensions
         for extension in self.extensions:
             if not is_extension(extension):
-                logger.error('You must type at least one extension.')
+                logger.error('You must type at least one EXTENSION.')
                 is_valid = False
 
         # Check initial_number
         if not is_positive_number(self.initial_number):
             logger.error(
-                'You must type a positive number or zero.'
+                'You must type a positive number or zero for INITIAL NUMBER.'
+            )
+            is_valid = False
+
+        # Check step
+        if self.step == 0 or not is_positive_number(self.step):
+            logger.error(
+                'You must type a positive number for STEP.'
             )
             is_valid = False
 
@@ -118,7 +128,7 @@ class ImageRenamer():
                 continue
 
             with alive_bar(len(filenames), bar='filling') as bar:
-                for i, filename in enumerate(filenames, self.initial_number):
+                for i, filename in enumerate_with_step(filenames, self.initial_number, self.step):
                     _, extension = os.path.splitext(filename)
                     dst_filename = os.path.join(
                         current_dir, f'{i:0{self.digit}}{extension}')

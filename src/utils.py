@@ -105,3 +105,19 @@ def append_prefix(targets: Union[str, list[str], tuple[str]], prefix: str) -> tu
         for target in targets:
             targets_prefix_added.append(prefix + target)
         return tuple(targets_prefix_added)
+
+
+def enumerate_with_step(elements, initial_number=0, step=1):
+    """Enumerate with step.
+
+    Args:
+        elements (list): Elements.
+        initial_number (int, optional): Initial number. Defaults to 0.
+        step (int, optional): Step number. Defaults to 1.
+
+    Yields:
+        (key, value): Counted number and the value.
+    """
+    for element in elements:
+        yield (initial_number, element)
+        initial_number += step
