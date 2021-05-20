@@ -4,7 +4,7 @@ import fire
 from alive_progress import alive_bar
 from typing import Union
 from validator import is_dir, is_extension, is_bool, is_in_range, is_positive_number
-from utils import natural_keys, show_info, setup_logger, append_prefix, enumerate_with_step
+from utils import natural_keys, show_info, setup_logger, append_prefix, enumerate_with_step, gen_random_filename
 
 
 logger = setup_logger(__name__)
@@ -132,6 +132,20 @@ class ImageRenamer():
                     _, extension = os.path.splitext(filename)
                     dst_filename = os.path.join(
                         current_dir, f'{i:0{self.digit}}{extension}')
+
+                    # If the file already exists at the renamed location, rename the existed file to some random name
+                    if os.path.exists(dst_filename):
+                        tmp_filename = gen_random_filename(current_dir, extension)
+                        try:
+                            existed_file_index = filenames.index(dst_filename)
+                        except ValueError:
+                            logger.error('Existed filename suddenly dissappeared!')
+                            logger.error('Unexpected error occurred! Abort...')
+                            return
+
+                        filenames[existed_file_index] = tmp_filename
+                        os.rename(dst_filename, tmp_filename)
+
                     os.rename(filename, dst_filename)
                     bar()
 
