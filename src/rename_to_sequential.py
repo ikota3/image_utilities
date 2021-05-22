@@ -133,6 +133,11 @@ class ImageRenamer():
                     dst_filename = os.path.join(
                         current_dir, f'{i:0{self.digit}}{extension}')
 
+                    # If the file already renamed, skip
+                    if filename == dst_filename:
+                        bar()
+                        continue
+
                     # If the file already exists at the renamed location, rename the existed file to some random name
                     if os.path.exists(dst_filename):
                         tmp_filename = gen_random_filename(current_dir, extension)
