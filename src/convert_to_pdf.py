@@ -1,10 +1,9 @@
-import re
 import os
 import fire
 import img2pdf
 from validator import is_dir, is_extension, is_bool
 from typing import Union
-from utils import natural_keys, show_info, setup_logger, append_prefix
+from utils import natural_keys, show_info, setup_logger, append_prefix, UserResponse, ask
 
 
 logger = setup_logger(__name__)
@@ -94,12 +93,8 @@ class ImageConverter():
             return
 
         if not self.yes:
-            user_input = ''
-            while not re.search('^[yYnN].*$', user_input):
-                user_input = input('Are you sure to execute?(y/n): ')
-
-            logger.info(f'User input: {user_input}')
-            if re.search('^[nN].*$', user_input):
+            user_response = ask()
+            if user_response == UserResponse.NO:
                 logger.info('Abort...')
                 return
 

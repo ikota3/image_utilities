@@ -1,10 +1,9 @@
-import re
 import os
 import fire
 from alive_progress import alive_bar
 from typing import Union
 from validator import is_dir, is_extension, is_bool, is_in_range, is_positive_number
-from utils import natural_keys, show_info, setup_logger, append_prefix, enumerate_with_step, gen_random_filename
+from utils import natural_keys, show_info, setup_logger, append_prefix, enumerate_with_step, gen_random_filename, UserResponse, ask
 
 
 logger = setup_logger(__name__)
@@ -102,12 +101,8 @@ class ImageRenamer():
             return
 
         if not self.yes:
-            user_input = ''
-            while not re.search('^[yYnN].*$', user_input):
-                user_input = input('Are you sure to execute?(y/n): ')
-
-            logger.info(f'User input: {user_input}')
-            if re.search('^[nN].*$', user_input):
+            user_response = ask()
+            if user_response == UserResponse.NO:
                 logger.info('Abort...')
                 return
 

@@ -1,8 +1,7 @@
-import re
 import os
 import fire
 from validator import is_dir, is_extension, is_bool
-from utils import show_info, natural_keys, gen_random_filename, setup_logger
+from utils import show_info, natural_keys, gen_random_filename, setup_logger, UserResponse, ask
 
 
 logger = setup_logger(__name__)
@@ -70,12 +69,8 @@ class ImageSwap():
             return
 
         if not self.yes:
-            user_input = ''
-            while not re.search('^[yYnN].*$', user_input):
-                user_input = input('Are you sure to execute?(y/n): ')
-
-            logger.info(f'User input: {user_input}')
-            if re.search('^[nN].*$', user_input):
+            user_response = ask()
+            if user_response == UserResponse.NO:
                 logger.info('Abort...')
                 return
 
