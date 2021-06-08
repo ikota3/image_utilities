@@ -3,6 +3,25 @@ import re
 import uuid
 import logging
 from typing import Union, List
+from enum import Enum, auto
+
+
+class UserResponse(Enum):
+    """Enum for user's response.
+
+    Yes or No.
+    """
+    YES = auto()
+    NO = auto()
+
+    def __eq__(self, other):
+        if self.__class__ is not other.__class__:
+            return False
+
+        if self.value == other.value:
+            return True
+
+        return False
 
 
 def setup_logger(name: str) -> logging.Logger:
@@ -121,3 +140,21 @@ def enumerate_with_step(elements, initial_number=0, step=1):
     for element in elements:
         yield (initial_number, element)
         initial_number += step
+
+
+def ask() -> UserResponse:
+    """Ask user to select yes or no.
+
+    This will continue forever until keyboard-interrupt occurres or the user inputs "Yes" or "No".
+
+    Returns:
+        UserResponse: User's response(Yes or No)
+    """
+    user_input = ''
+    while not re.search(r'^[ynYN].*$', user_input):
+        user_input = input('Are you sure to execute?(y/n): ')
+
+    if re.search(r'^[yY].*$', user_input):
+        return UserResponse.YES
+    else:
+        return UserResponse.NO
