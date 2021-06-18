@@ -1,4 +1,5 @@
 fire
 img2pdf
 alive-progress
+epub_meta
 pytest
