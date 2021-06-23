@@ -100,6 +100,10 @@ class ImageRenamer():
             logger.info('Input parameter is not valid. Try again.')
             return
 
+        total_dirs = sum([len(dirs) for _, dirs, _ in os.walk(self.target_dir)])
+        total_dirs_char_len = len(str(total_dirs))
+        logger.info(f'{total_dirs} directories will be executed.')
+
         if not self.yes:
             user_response = ask()
             if user_response == UserResponse.NO:
@@ -108,7 +112,11 @@ class ImageRenamer():
 
         logger.info('Start renaming images to sequential number...')
 
-        for current_dir, dirs, files in os.walk(self.target_dir):
+        for i, directory_tree in enumerate(os.walk(self.target_dir)):
+
+            # Unpack directory info
+            current_dir, dirs, files = directory_tree
+
             logger.info(f'Watching {current_dir}.')
             filenames = []
             for filename in sorted(files, key=natural_keys):
@@ -122,11 +130,11 @@ class ImageRenamer():
                 )
                 continue
 
-            with alive_bar(len(filenames), bar='filling') as bar:
-                for i, filename in enumerate_with_step(filenames, self.initial_number, self.step):
+            with alive_bar(len(filenames), bar='filling', spinner='dots_waves') as bar:
+                for j, filename in enumerate_with_step(filenames, self.initial_number, self.step):
                     _, extension = os.path.splitext(filename)
                     dst_filename = os.path.join(
-                        current_dir, f'{i:0{self.digit}}{extension}')
+                        current_dir, f'{j:0{self.digit}}{extension}')
 
                     # If the file already renamed, skip
                     if filename == dst_filename:
@@ -152,6 +160,7 @@ class ImageRenamer():
             logger.info(
                 f'Renamed {", ".join(self.extensions).upper()} files at {current_dir}.'
             )
+            logger.info(f'PROGRESS: {i:0{total_dirs_char_len}}/{total_dirs}')
 
         logger.info('Abort...')
 
