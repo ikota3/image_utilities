@@ -217,10 +217,10 @@ def test_is_positive_number__positive_number_should_return_true():
     assert ret_val == expected
 
 
-def test_is_positive_number__zero_should_return_true():
+def test_is_positive_number__zero_should_return_false():
     target = 0
     ret_val = is_positive_number(target)
-    expected = True
+    expected = False
     assert ret_val == expected
 
 

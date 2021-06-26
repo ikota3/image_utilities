@@ -41,6 +41,7 @@ def is_bool(target: bool) -> bool:
 
 
 def is_in_range(target: int, min_num: int, max_num: int, exclude: bool = False) -> bool:
+    """Check target is in range. Minimum and maximum number will be included in default."""
     if not isinstance(target, int):
         return False
 
@@ -55,10 +56,18 @@ def is_in_range(target: int, min_num: int, max_num: int, exclude: bool = False) 
 
 
 def is_positive_number(target: int) -> bool:
+    """Check target is a positive number.
+
+    Args:
+        target (int): Number.
+
+    Returns:
+        bool: Return True if the given integer is positive.
+    """
     if not isinstance(target, int):
         return False
 
-    if target < 0:
+    if target <= 0:
         return False
 
     return True

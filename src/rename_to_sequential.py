@@ -67,14 +67,14 @@ class ImageRenamer():
                 is_valid = False
 
         # Check initial_number
-        if not is_positive_number(self.initial_number):
+        if not self.initial_number == 0 or is_positive_number(self.initial_number):
             logger.error(
-                'You must type a positive number or zero for INITIAL NUMBER.'
+                'You must type a ZERO or positive number for INITIAL NUMBER.'
             )
             is_valid = False
 
         # Check step
-        if self.step == 0 or not is_positive_number(self.step):
+        if not is_positive_number(self.step):
             logger.error(
                 'You must type a positive number for STEP.'
             )
