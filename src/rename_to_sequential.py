@@ -51,39 +51,39 @@ class ImageRenamer():
         # Check target_dir
         if not is_dir(self.target_dir):
             logger.error(
-                'You must type a valid directory for TARGET DIRECTORY.'
+                'You must type a valid directory for TARGET DIRECTORY. (-t, --target_directory)'
             )
             is_valid = False
 
         # Check digit
         if not is_in_range(self.digit, 3, 9, False):
-            logger.error('You must type a number for DIGIT.(Min: 3, Max: 9)')
+            logger.error('You must type a number for DIGIT. [Min: 3, Max: 9] (-d, --digit)')
             is_valid = False
 
         # Check extensions
         for extension in self.extensions:
             if not is_extension(extension):
-                logger.error('You must type at least one EXTENSION.')
+                logger.error('You must type at least one EXTENSION. (-e, --extensions)')
                 is_valid = False
 
         # Check initial_number
         if not self.initial_number == 0 or is_positive_number(self.initial_number):
             logger.error(
-                'You must type a ZERO or positive number for INITIAL NUMBER.'
+                'You must type a ZERO or positive number for INITIAL NUMBER. (-i, --initial_number)'
             )
             is_valid = False
 
         # Check step
         if not is_positive_number(self.step):
             logger.error(
-                'You must type a positive number for STEP.'
+                'You must type a positive number for STEP. (-s, --step)'
             )
             is_valid = False
 
         # Check yes
         if not is_bool(self.yes):
             logger.error(
-                'You must just type -y flag. No need to type a parameter.'
+                'You must just type -y flag. No need to type a parameter. (-y, --yes)'
             )
             is_valid = False
 
