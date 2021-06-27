@@ -223,7 +223,7 @@ def get_epub_info(filepath: str) -> dict:
     author = epub_info_xml.xpath("//ns:metadata/dc:creator/text()", namespaces=namespace)
     genre = epub_info_xml.xpath("//ns:metadata/ns:meta[@name='book-type']/@content", namespaces=namespace)
     ret_val = {
-        'title': title,
+        'title': title.encode('cp932', errors='backslashreplace').decode('cp932'),
         'author': re.sub(r'[ |　]', '', author[0]) if len(author) != 0 else 'NotFound',
         'genre': genre[0].upper() if genre else 'NotFound'
     }
@@ -364,7 +364,7 @@ class EPubInfo():
 
                 # Extract image files in EPub file
                 logger.info('\n' + ('#' * 25))
-                logger.info(f'EXTRACTING {basename_without_ext}...')
+                logger.info(f'EXTRACTING... {basename_without_ext}')
                 imagepaths_in_epub = [
                     path.filename for path in epub_file.filelist
                     if path.filename.endswith(('.jpg', '.jpeg', '.png')) and not re.search(r'[\\\/]public(image|_image| image)s?', path.filename)
@@ -374,7 +374,7 @@ class EPubInfo():
                         epub_file._extract_member(imagepath_in_epub, output_dir, None)
                         bar()
                 # epub_file.extractall(output_dir, imagepaths_in_epub)
-                logger.info(f'EXTRACTED! {basename_without_ext}')
+                logger.info(f'EXTRACT COMPLETE! {basename_without_ext}')
 
                 # Rename the first directory name to book's title
                 first_directory_name = imagepaths_in_epub[0].split('/')[0]
@@ -442,19 +442,11 @@ class EPubInfo():
 
 
 def main():
-    # import io
-    # import sys
-    # sys.stdout = io.TextIOWrapper(
-    #     sys.stdout.buffer,
-    #     encoding=sys.stdout.encoding,
-    #     errors='backslashreplace',
-    #     line_buffering=sys.stdout.line_buffering,
-    #     write_through=True
-    # )
 
     fire.Fire(EPubInfo)
 
-    # (?<=rename )(".+?")(?= ) (".+")$ -> $2 $1
+    # (?<=rename )(".+?")(?= ) (".+")$
+    # $2 $1
 
 
 if __name__ == '__main__':
