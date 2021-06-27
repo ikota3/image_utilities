@@ -224,7 +224,7 @@ def get_epub_info(filepath: str) -> dict:
     genre = epub_info_xml.xpath("//ns:metadata/ns:meta[@name='book-type']/@content", namespaces=namespace)
     ret_val = {
         'title': title.encode('cp932', errors='backslashreplace').decode('cp932'),
-        'author': re.sub(r'[ |　]', '', author[0]) if len(author) != 0 else 'NotFound',
+        'author': re.sub(r'( |　)', '', author[0]) if len(author) != 0 else 'NotFound',
         'genre': genre[0].upper() if genre else 'NotFound'
     }
     return ret_val
